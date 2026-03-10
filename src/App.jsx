@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/home";
 import Dashboard from "./pages/Dashboard";
+import Auth from "./pages/Auth";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useTheme } from "./context/useTheme";
 
@@ -30,6 +31,7 @@ function AppRoutes() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>

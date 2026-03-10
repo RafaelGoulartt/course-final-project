@@ -22,6 +22,9 @@ export default function Navbar() {
 
   const navTextClass = isDark ? "text-slate-300" : "text-slate-700";
   const titleClass = isDark ? "text-slate-100" : "text-slate-900";
+  const authButtonClass = isDark
+    ? "bg-sky-400 text-slate-950 hover:bg-sky-300"
+    : "bg-sky-500 text-slate-950 hover:bg-sky-400";
   const mobilePanelClass = isDark ? "border-slate-800 bg-slate-950" : "border-slate-300 bg-white";
   const mobileHoverClass = isDark ? "hover:bg-slate-900" : "hover:bg-slate-100";
 
@@ -53,12 +56,11 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition ${themeButtonClass}`}
-            aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"}
-            title={isDark ? "Tema claro" : "Tema escuro"}
+          <Link to="/auth" className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${authButtonClass}`}
+          >
+            Login / Cadastro
+          </Link>
+          <button type="button" onClick={toggleTheme} className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition ${themeButtonClass}`} aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"} title={isDark ? "Tema claro" : "Tema escuro"}
           >
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
             {isDark ? "Claro" : "Escuro"}
@@ -66,19 +68,11 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:hidden">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className={`rounded-lg border p-2 transition ${themeButtonClass}`}
-            aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"}
-            title={isDark ? "Tema claro" : "Tema escuro"}
+          <button type="button" onClick={toggleTheme} className={`rounded-lg border p-2 transition ${themeButtonClass}`} aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"} title={isDark ? "Tema claro" : "Tema escuro"}
           >
             {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
-          <button
-            className={`rounded-lg border p-2 transition ${themeButtonClass}`}
-            onClick={() => setOpen(!open)}
-            aria-label="Abrir menu"
+          <button className={`rounded-lg border p-2 transition ${themeButtonClass}`} onClick={() => setOpen(!open)} aria-label="Abrir menu"
           >
             {open ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -91,24 +85,22 @@ export default function Navbar() {
             {navItems.map((item) => (
               <li key={item.label}>
                 {item.to ? (
-                  <Link
-                    to={item.to}
-                    onClick={() => setOpen(false)}
-                    className={`block rounded-lg px-3 py-2 transition ${mobileHoverClass}`}
+                  <Link to={item.to} onClick={() => setOpen(false)} className={`block rounded-lg px-3 py-2 transition ${mobileHoverClass}`}
                   >
                     {item.label}
                   </Link>
                 ) : (
-                  <a
-                    href={item.href}
-                    onClick={() => setOpen(false)}
-                    className={`block rounded-lg px-3 py-2 transition ${mobileHoverClass}`}
-                  >
+                  <a href={item.href} onClick={() => setOpen(false)} className={`block rounded-lg px-3 py-2 transition ${mobileHoverClass}`}>
                     {item.label}
                   </a>
                 )}
               </li>
             ))}
+            <li>
+              <Link to="/auth" onClick={() => setOpen(false)} className={`block rounded-lg px-3 py-2 font-semibold ${authButtonClass}`}>
+                Login
+              </Link>
+            </li>
           </ul>
         </div>
       )}
