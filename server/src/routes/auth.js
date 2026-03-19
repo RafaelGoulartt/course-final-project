@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
 import crypto from "node:crypto";
-import { getPool, sql } from "../db.js";
+import { getPool } from "../db.js";
 
 const router = Router();
 
@@ -14,27 +14,22 @@ router.post("/register", async (req, res) => {
 
   try {
     const pool = await getPool();
+    const normalizedEmail = email.trim().toLowerCase();
 
-    const existing = await pool
-      .request()
-      .input("email", sql.NVarChar(255), email.trim().toLowerCase())
-      .query("SELECT TOP 1 Id FROM Users WHERE Email = @email");
+    const existing = await pool.query("SELECT id FROM users WHERE email = $1 LIMIT 1", [normalizedEmail]);
 
-    if (existing.recordset.length > 0) {
+    if (existing.rowCount > 0) {
       return res.status(409).json({ message: "Este email ja esta cadastrado." });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
+    const normalizedName = name.trim();
 
-    await pool
-      .request()
-      .input("name", sql.NVarChar(150), name.trim())
-      .input("email", sql.NVarChar(255), email.trim().toLowerCase())
-      .input("passwordHash", sql.NVarChar(255), passwordHash)
-      .query(`
-        INSERT INTO Users (Name, Email, PasswordHash, CreatedAt)
-        VALUES (@name, @email, @passwordHash, GETDATE())
-      `);
+    await pool.query("INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3)", [
+      normalizedName,
+      normalizedEmail,
+      passwordHash,
+    ]);
 
     return res.status(201).json({
       ok: true,
@@ -57,23 +52,20 @@ router.post("/login", async (req, res) => {
 
   try {
     const pool = await getPool();
+    const normalizedEmail = email.trim().toLowerCase();
 
-    const result = await pool
-      .request()
-      .input("email", sql.NVarChar(255), email.trim().toLowerCase())
-      .query(`
-        SELECT TOP 1 Id, Name, Email, PasswordHash
-        FROM Users
-        WHERE Email = @email
-      `);
+    const result = await pool.query(
+      "SELECT id, name, email, password_hash FROM users WHERE email = $1 LIMIT 1",
+      [normalizedEmail],
+    );
 
-    const user = result.recordset[0];
+    const user = result.rows[0];
 
     if (!user) {
       return res.status(401).json({ message: "Email ou senha invalidos." });
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.PasswordHash);
+    const isValidPassword = await bcrypt.compare(password, user.password_hash);
 
     if (!isValidPassword) {
       return res.status(401).json({ message: "Email ou senha invalidos." });
@@ -86,9 +78,9 @@ router.post("/login", async (req, res) => {
       message: "Login realizado com sucesso.",
       token,
       user: {
-        id: user.Id,
-        name: user.Name,
-        email: user.Email,
+        id: user.id,
+        name: user.name,
+        email: user.email,
       },
     });
   } catch (error) {

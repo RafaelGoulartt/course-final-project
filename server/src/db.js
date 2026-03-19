@@ -1,30 +1,17 @@
-import sql from "mssql";
+import { Pool } from "pg";
 
-const config = {
-  user: process.env.SQLSERVER_USER,
-  password: process.env.SQLSERVER_PASSWORD,
-  server: process.env.SQLSERVER_HOST,
-  port: Number(process.env.SQLSERVER_PORT || 1433),
-  database: process.env.SQLSERVER_DATABASE,
-  options: {
-    encrypt: process.env.SQLSERVER_ENCRYPT === "true",
-    trustServerCertificate: process.env.SQLSERVER_TRUST_SERVER_CERT !== "false",
-  },
-  pool: {
-    max: 10,
-    min: 0,
-    idleTimeoutMillis: 30000,
-  },
-};
-
-let poolPromise;
+const pool = new Pool({
+  host: process.env.POSTGRES_HOST || "localhost",
+  port: Number(process.env.POSTGRES_PORT || 5432),
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
+  ssl: { rejectUnauthorized: false },
+  max: 10,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
+});
 
 export async function getPool() {
-  if (!poolPromise) {
-    poolPromise = sql.connect(config);
-  }
-
-  return poolPromise;
+  return pool;
 }
-
-export { sql };

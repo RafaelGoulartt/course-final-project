@@ -22,10 +22,11 @@ app.use("/api/auth", authRoutes);
 
 app.listen(port, async () => {
   try {
-    await getPool();
+    const pool = await getPool();
+    await pool.query("SELECT 1");
     console.log(`API rodando em http://localhost:${port}`);
-    console.log("Conexao com SQL Server estabelecida.");
+    console.log("Conexao com PostgreSQL estabelecida.");
   } catch (error) {
-    console.error("Falha ao conectar no SQL Server:", error.message);
+    console.error("Falha ao conectar no PostgreSQL:", error.message);
   }
 });
