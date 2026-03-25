@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { ArrowLeft, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/useTheme";
 import { authService } from "../services/authService";
 
@@ -18,6 +18,7 @@ function getPasswordChecks(password) {
 }
 
 export default function Auth() {
+  const navigate = useNavigate();
   const [mode, setMode] = useState("login");
   const [loginData, setLoginData] = useState(initialLogin);
   const [registerData, setRegisterData] = useState(initialRegister);
@@ -61,6 +62,9 @@ export default function Auth() {
     try {
       const result = await authService.login(loginData);
       setMessage(result.message);
+      if (result?.user?.id) {
+        navigate("/dashboard");
+      }
     } catch {
       setMessage("Nao foi possivel fazer login.");
     } finally {

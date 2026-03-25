@@ -28,11 +28,23 @@ export const authService = {
     if (data?.token) {
       localStorage.setItem("auth_token", data.token);
     }
+    if (data?.user) {
+      localStorage.setItem("auth_user", JSON.stringify(data.user));
+    }
 
     return data;
   },
 
   async register(payload) {
     return request("/auth/register", payload);
+  },
+
+  getCurrentUser() {
+    try {
+      const value = localStorage.getItem("auth_user");
+      return value ? JSON.parse(value) : null;
+    } catch {
+      return null;
+    }
   },
 };
