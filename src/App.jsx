@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Home from "./pages/home";
 import Dashboard from "./pages/Dashboard";
+import ParentsDashboard from "./pages/ParentsDashboard";
 import Auth from "./pages/Auth";
 import { ThemeProvider } from "./context/ThemeContext";
 import { useTheme } from "./context/useTheme";
@@ -33,6 +34,7 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard-pais" element={<ParentsDashboard />} />
       </Routes>
     </>
   );
