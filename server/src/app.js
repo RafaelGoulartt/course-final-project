@@ -5,18 +5,7 @@ import dashboardRoutes from "./routes/dashboard.js";
 
 const app = express();
 
-const allowedOrigins = process.env.CORS_ORIGIN
-  ? process.env.CORS_ORIGIN.split(",").map((o) => o.trim())
-  : null;
-
-app.use(
-  cors({
-    origin: (origin, cb) => {
-      if (!allowedOrigins || !origin || allowedOrigins.includes(origin)) return cb(null, true);
-      cb(new Error("Not allowed by CORS"));
-    },
-  }),
-);
+app.use(cors());
 app.use(express.json());
 
 app.get("/api/health", (_req, res) => {
