@@ -1,4 +1,4 @@
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || "http://localhost:3001/api").replace(/\/$/, "");
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? "http://localhost:3001/api" : "/api")).replace(/\/$/, "");
 
 async function request(path, body) {
   const response = await fetch(`${API_BASE_URL}${path}`, {
