@@ -193,6 +193,14 @@ export async function atualizarFilho(req, res) {
 export async function salvarTempoUso(req, res) {
   const { token, dados, dispositivo_id, nome_filho } = req.body || {};
 
+  console.log("[tempo-uso] Requisição recebida:", {
+    token: token ? `${token.slice(0, 8)}...` : null,
+    nome_filho,
+    dispositivo_id,
+    quantidade_registros: Array.isArray(dados) ? dados.length : 0,
+    dados,
+  });
+
   if (!token || !Array.isArray(dados) || dados.length === 0) {
     return res.status(400).json({ message: "Payload invalido. Envie token e dados." });
   }
@@ -277,12 +285,17 @@ export async function salvarTempoUso(req, res) {
       }
 
       await client.query(
-        "INSERT INTO tempo_uso (filho_id, app_id, tempo_minutos, data_uso) VALUES ($1, $2, $3, $4)",
+        `INSERT INTO tempo_uso (filho_id, app_id, tempo_minutos, data_uso)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (filho_id, app_id, data_uso)
+         DO UPDATE SET tempo_minutos = EXCLUDED.tempo_minutos`,
         [filhoId, appId, tempoMinutos, dataUso],
       );
     }
 
     await client.query("COMMIT");
+
+    console.log("[tempo-uso] Dados salvos com sucesso. filho_id:", filhoId, "| registros:", dados.length);
 
     return res.status(201).json({
       ok: true,

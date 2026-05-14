@@ -33,6 +33,7 @@ export async function register(req, res) {
       message: "Cadastro realizado com sucesso.",
     });
   } catch (error) {
+    console.error("[register]", error.message);
     return res.status(500).json({
       message: "Erro interno ao cadastrar usuário.",
       detail: error.message,
@@ -81,6 +82,7 @@ export async function login(req, res) {
       },
     });
   } catch (error) {
+    console.error("[login]", error.message);
     return res.status(500).json({
       message: "Erro interno ao autenticar usuário.",
       detail: error.message,

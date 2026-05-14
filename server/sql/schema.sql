@@ -43,5 +43,6 @@ CREATE TABLE IF NOT EXISTS tempo_uso (
   filho_id       INTEGER NOT NULL REFERENCES filhos(id) ON DELETE CASCADE,
   app_id         INTEGER NOT NULL REFERENCES apps(id) ON DELETE CASCADE,
   tempo_minutos  INTEGER NOT NULL CHECK (tempo_minutos >= 0),
-  data_uso       DATE NOT NULL
+  data_uso       DATE NOT NULL,
+  UNIQUE(filho_id, app_id, data_uso)
 );
