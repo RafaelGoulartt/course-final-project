@@ -47,4 +47,9 @@ export const authService = {
       return null;
     }
   },
+
+  logout() {
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("auth_user");
+  },
 };

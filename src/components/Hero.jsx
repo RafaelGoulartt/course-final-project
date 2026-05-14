@@ -5,7 +5,7 @@ import { useTheme } from "../context/useTheme";
 
 const highlights = [
   { label: "Nosso foco", value: "Conscientizar", icon: Clock3 },
-  { label: "Com quem", value: "Familias e escolas", icon: ShieldAlert },
+  { label: "Com quem", value: "Famílias e escolas", icon: ShieldAlert },
   { label: "Resultado esperado", value: "Escolhas melhores", icon: BarChart3 },
 ];
 
@@ -36,15 +36,15 @@ export default function Hero() {
           <p
             className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${badgeClass}`}
           >
-            Projeto de conscientizacao digital
+            Projeto de conscientização digital
           </p>
           <h1 className={`mt-5 text-4xl font-bold leading-tight md:text-6xl ${titleClass}`}>
-            Este site existe para explicar, de forma simples, o impacto das telas na infancia
+            Este site existe para explicar, de forma simples, o impacto das telas na infância
           </h1>
           <p className={`mt-5 text-base md:text-lg ${textClass}`}>
-            Nosso objetivo e ajudar familias, educadores e a comunidade escolar a entender o
-            problema, conversar sobre ele e construir habitos digitais mais saudaveis para
-            criancas e adolescentes.
+            Nosso objetivo é ajudar famílias, educadores e a comunidade escolar a entender o
+            problema, conversar sobre ele e construir hábitos digitais mais saudáveis para
+            crianças e adolescentes.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -52,7 +52,7 @@ export default function Hero() {
               href="#sobre"
               className="rounded-xl bg-sky-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
             >
-              Entender proposta
+              Entender a proposta
             </a>
             <Link
               to="/dashboard"

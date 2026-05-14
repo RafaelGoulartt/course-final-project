@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { ArrowLeft, Eye, EyeOff } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { ArrowLeft, Eye, EyeOff, CheckCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/useTheme";
 import { authService } from "../services/authService";
@@ -26,7 +26,20 @@ export default function Auth() {
   const [showRegisterConfirmPassword, setShowRegisterConfirmPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [countdown, setCountdown] = useState(5);
   const { isDark } = useTheme();
+
+  useEffect(() => {
+    if (!showSuccessModal) return;
+    if (countdown === 0) {
+      setShowSuccessModal(false);
+      setMode("login");
+      return;
+    }
+    const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [showSuccessModal, countdown]);
 
   const isLogin = mode === "login";
   const passwordChecks = getPasswordChecks(registerData.password);
@@ -66,7 +79,7 @@ export default function Auth() {
         navigate("/dashboard-pais");
       }
     } catch {
-      setMessage("Nao foi possivel fazer login.");
+      setMessage("Não foi possível fazer login.");
     } finally {
       setSubmitting(false);
     }
@@ -77,22 +90,24 @@ export default function Auth() {
     setMessage("");
 
     if (!isPasswordStrong) {
-      setMessage("A senha precisa atender aos requisitos de seguranca.");
+      setMessage("A senha precisa atender aos requisitos de segurança.");
       return;
     }
 
     if (registerData.password !== registerData.confirmPassword) {
-      setMessage("As senhas nao conferem.");
+      setMessage("As senhas não conferem.");
       return;
     }
 
     setSubmitting(true);
 
     try {
-      const result = await authService.register(registerData);
-      setMessage(result.message);
+      await authService.register(registerData);
+      setRegisterData(initialRegister);
+      setCountdown(5);
+      setShowSuccessModal(true);
     } catch {
-      setMessage("Nao foi possivel concluir o cadastro.");
+      setMessage("Não foi possível concluir o cadastro.");
     } finally {
       setSubmitting(false);
     }
@@ -100,6 +115,31 @@ export default function Auth() {
 
   return (
     <main className={`flex min-h-screen items-center justify-center p-4 md:p-8 ${pageClass}`}>
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className={`mx-4 w-full max-w-sm rounded-3xl border p-8 text-center shadow-2xl ${isDark ? "border-slate-700 bg-slate-900" : "border-slate-200 bg-white"}`}>
+            <div className="mb-4 flex justify-center">
+              <CheckCircle size={56} className="text-emerald-500" />
+            </div>
+            <h2 className="text-2xl font-bold">Conta criada!</h2>
+            <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+              Sua conta foi criada com sucesso. Você será redirecionado para o login em instantes.
+            </p>
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <span className="text-4xl font-bold text-sky-500">{countdown}</span>
+              <span className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>segundos</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setShowSuccessModal(false); setMode("login"); }}
+              className="mt-6 w-full rounded-xl bg-sky-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
+            >
+              Ir para o login agora
+            </button>
+          </div>
+        </div>
+      )}
       <section className={`w-full max-w-5xl overflow-hidden rounded-3xl border shadow-2xl ${cardClass}`}>
         <div className="grid min-h-[680px] grid-cols-1 lg:grid-cols-2">
           <div className="relative order-2 overflow-hidden px-5 py-8 md:px-10 lg:order-1 lg:p-12">
@@ -142,7 +182,7 @@ export default function Auth() {
                 <div>
                   <h1 className="text-3xl font-bold">Cadastrar</h1>
                   <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                    Crie sua conta para comecar.
+                    Crie sua conta para começar.
                   </p>
                 </div>
 
@@ -170,10 +210,10 @@ export default function Auth() {
                         Pelo menos 8 caracteres
                       </li>
                       <li className={passwordChecks.uppercase ? "text-emerald-500" : "text-rose-500"}>
-                        Uma letra maiscula
+                        Uma letra maiúscula
                       </li>
                       <li className={passwordChecks.lowercase ? "text-emerald-500" : "text-rose-500"}>
-                        Uma letra minuscula
+                        Uma letra minúscula
                       </li>
                       <li className={passwordChecks.number ? "text-emerald-500" : "text-rose-500"}>
                         Um número
@@ -203,7 +243,11 @@ export default function Auth() {
             </div>
 
             {message && (
-              <p className={`mt-3 text-sm ${isDark ? "text-slate-300" : "text-slate-700"}`}>
+              <p className={`mt-3 text-sm font-medium ${
+                message.includes("sucesso")
+                  ? "text-emerald-500"
+                  : isDark ? "text-rose-400" : "text-rose-600"
+              }`}>
                 {message}
               </p>
             )}
@@ -214,11 +258,11 @@ export default function Auth() {
           >
             <p className="text-sm font-semibold uppercase tracking-widest">Acesso da plataforma</p>
             <h2 className="mt-4 text-3xl font-bold leading-tight md:text-4xl">
-              {isLogin ? "Novo por aqui?" : "Ja possui conta?"}
+              {isLogin ? "Novo por aqui?" : "Já possui conta?"}
             </h2>
             <p className="mt-4 max-w-md text-sm md:text-base">
               {isLogin
-                ? "Clique em cadastrar para criar seu acesso. A tela muda com animacao sem sair desta pagina."
+                ? "Clique em cadastrar para criar seu acesso. A tela muda com animação sem sair desta página."
                 : "Volte para login em um clique e acesse com seu email e senha."}
             </p>
 

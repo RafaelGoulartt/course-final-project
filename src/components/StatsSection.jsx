@@ -5,20 +5,20 @@ import { useTheme } from "../context/useTheme";
 const stats = [
   {
     title: "Contexto",
-    value: "Cenario real",
-    description: "Apresentamos o tema com linguagem simples e proxima do dia a dia.",
+    value: "Cenário real",
+    description: "Apresentamos o tema com linguagem simples e próxima do dia a dia.",
     icon: Gauge,
   },
   {
     title: "Impactos",
     value: "Olhar humano",
-    description: "Mostramos como o uso excessivo de telas pode afetar rotina e bem-estar.",
+    description: "Mostramos como o uso excessivo de telas pode afetar a rotina e o bem-estar.",
     icon: TrendingUp,
   },
   {
     title: "Caminhos",
-    value: "Acao pratica",
-    description: "Indicamos formas de iniciar conversas e construir habitos mais equilibrados.",
+    value: "Ação prática",
+    description: "Indicamos formas de iniciar conversas e construir hábitos mais equilibrados.",
     icon: Users,
   },
 ];
@@ -42,10 +42,10 @@ export default function StatsSection() {
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <div className="mb-10 text-center">
           <h2 className={`text-3xl font-bold md:text-4xl ${titleClass}`}>
-            O que voce encontra nesta pagina
+            O que você encontra nesta página
           </h2>
           <p className={`mx-auto mt-3 max-w-2xl ${textClass}`}>
-            Esta tela foi pensada para explicar o projeto, o motivo dele existir e como ele pode
+            Esta tela foi pensada para explicar o projeto, o motivo de ele existir e como pode
             ajudar pessoas reais.
           </p>
         </div>

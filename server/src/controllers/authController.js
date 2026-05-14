@@ -6,7 +6,7 @@ export async function register(req, res) {
   const { name, email, password } = req.body || {};
 
   if (!name || !email || !password) {
-    return res.status(400).json({ message: "Campos obrigatorios: name, email e password." });
+    return res.status(400).json({ message: "Campos obrigatórios: nome, email e senha." });
   }
 
   try {
@@ -17,7 +17,7 @@ export async function register(req, res) {
     const existing = await pool.query("SELECT id FROM usuarios WHERE email = $1 LIMIT 1", [normalizedEmail]);
 
     if (existing.rowCount > 0) {
-      return res.status(409).json({ message: "Este email ja esta cadastrado." });
+      return res.status(409).json({ message: "Este e-mail já está cadastrado." });
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -34,7 +34,7 @@ export async function register(req, res) {
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Erro interno ao cadastrar usuario.",
+      message: "Erro interno ao cadastrar usuário.",
       detail: error.message,
     });
   }
@@ -44,7 +44,7 @@ export async function login(req, res) {
   const { email, password } = req.body || {};
 
   if (!email || !password) {
-    return res.status(400).json({ message: "Campos obrigatorios: email e password." });
+    return res.status(400).json({ message: "Campos obrigatórios: email e senha." });
   }
 
   try {
@@ -82,7 +82,7 @@ export async function login(req, res) {
     });
   } catch (error) {
     return res.status(500).json({
-      message: "Erro interno ao autenticar usuario.",
+      message: "Erro interno ao autenticar usuário.",
       detail: error.message,
     });
   }
