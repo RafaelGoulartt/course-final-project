@@ -63,7 +63,7 @@ export default function Auth() {
       const result = await authService.login(loginData);
       setMessage(result.message);
       if (result?.user?.id) {
-        navigate("/dashboard");
+        navigate("/dashboard-pais");
       }
     } catch {
       setMessage("Nao foi possivel fazer login.");

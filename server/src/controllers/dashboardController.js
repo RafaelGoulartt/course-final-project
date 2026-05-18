@@ -110,6 +110,8 @@ export async function getDashboard(req, res) {
        FROM tempo_uso t
        JOIN apps a ON a.id = t.app_id
        WHERE t.filho_id = $1
+         AND t.data_uso >= date_trunc('week', CURRENT_DATE)
+         AND t.data_uso < date_trunc('week', CURRENT_DATE) + INTERVAL '7 days'
        GROUP BY a.nome
        ORDER BY total DESC`,
       [filhoSelecionadoId],
