@@ -34,24 +34,24 @@ const highlightCards = [
   {
     title: "Pico de uso",
     value: "20h - 23h",
-    note: "Maior concentracao de tela no periodo noturno.",
+    note: "Maior concentração de tela no período noturno.",
   },
   {
-    title: "Publico mais exposto",
+    title: "Público mais exposto",
     value: "Classe alta",
-    note: "Media de 3.15 horas/dia em smartphone.",
+    note: "Média de 3.15 horas/dia em smartphone.",
   },
   {
-    title: "Variacao regional",
+    title: "Variação regional",
     value: "0.8h",
-    note: "Distancia entre o maior e menor indice.",
+    note: "Distância entre o maior e menor índice.",
   },
 ];
 
 const recentAlerts = [
-  "Sudeste manteve lideranca de uso por 3 meses consecutivos.",
-  "Classe media cresceu 4% no tempo medio diario.",
-  "Norte teve reducao de 2% no ultimo periodo medido.",
+  "Sudeste manteve liderança de uso por 3 meses consecutivos.",
+  "Classe média cresceu 4% no tempo médio diário.",
+  "Norte teve redução de 2% no último período medido.",
 ];
 
 export default function Dashboard() {
@@ -158,7 +158,7 @@ export default function Dashboard() {
       <html lang="pt-BR">
         <head>
           <meta charset="UTF-8" />
-          <title>ScreenTime BI - Relatorio</title>
+          <title>ScreenTime BI - Relatório</title>
           <style>
             * { box-sizing: border-box; }
             body { font-family: Arial, sans-serif; margin: 0; padding: 28px; color: #0f172a; background: #f8fafc; }
@@ -181,14 +181,14 @@ export default function Dashboard() {
         </head>
         <body>
           <div class="header">
-            <span class="badge">Relatorio em PDF</span>
+            <span class="badge">Relatório em PDF</span>
             <h1>ScreenTime BI - Panorama de Tempo de Tela</h1>
-            <p class="sub">Gerado em ${generatedAt} | Base consolidada: Marco 2026</p>
+            <p class="sub">Gerado em ${generatedAt} | Base consolidada: Março 2026</p>
           </div>
 
           <div class="grid">
             <section class="card">
-              <h2>Grafico por regiao (horas/dia)</h2>
+              <h2>Gráfico por região (horas/dia)</h2>
               ${barRows}
             </section>
             <section class="card">
@@ -197,7 +197,7 @@ export default function Dashboard() {
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Regiao</th>
+                    <th>Região</th>
                     <th style="text-align:right;">Horas</th>
                   </tr>
                 </thead>
@@ -208,7 +208,7 @@ export default function Dashboard() {
 
           <section class="kpis">
             <div class="kpi">
-              <div class="label">Media nacional</div>
+              <div class="label">Média nacional</div>
               <div class="value">2.5h</div>
             </div>
             <div class="kpi">
@@ -221,7 +221,7 @@ export default function Dashboard() {
             </div>
           </section>
 
-          <p class="foot">Dica: no dialogo de impressao, selecione "Salvar como PDF".</p>
+          <p class="foot">Dica: no diálogo de impressão, selecione "Salvar como PDF".</p>
         </body>
       </html>
     `);
@@ -264,31 +264,31 @@ export default function Dashboard() {
               Panorama atualizado
             </p>
             <h1 className={`mt-4 text-3xl font-bold md:text-4xl ${headingClass}`}>
-              Dashboard Analitico de Tempo de Tela
+              Dashboard Analítico de Tempo de Tela
             </h1>
             <p className={`mt-3 max-w-2xl text-sm md:text-base ${textClass}`}>
-              Acompanhe consumo diario por regiao e perfil social com foco em comportamento digital
-              e variacoes de tendencia.
+              Acompanhe consumo diário por região e perfil social com foco em comportamento digital
+              e variações de tendência.
             </p>
           </div>
           <div className={`rounded-2xl border px-4 py-3 text-sm ${smallCardClass}`}>
-            Ultima consolidacao: <span className={`font-semibold ${smallCardAccentClass}`}>Marco 2026</span>
+            Última consolidação: <span className={`font-semibold ${smallCardAccentClass}`}>Março 2026</span>
           </div>
         </div>
       </section>
 
       <section ref={classesRef} className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <KPI
-          title="Media nacional"
+          title="Média nacional"
           value="2.5h"
-          subtitle="Tempo medio diario por usuario"
+          subtitle="Tempo médio diário por usuário"
           trend="+12% vs 2025"
           trendUp
           icon={Clock3}
           tone="blue"
         />
         <KPI
-          title="Regiao com maior uso"
+          title="Região com maior uso"
           value="Sudeste"
           subtitle="2.9 horas por dia"
           trend="+0.2h no trimestre"
@@ -306,9 +306,9 @@ export default function Dashboard() {
           tone="emerald"
         />
         <KPI
-          title="Sinal de atencao"
+          title="Sinal de atenção"
           value="Noite"
-          subtitle="Faixa de maior exposicao digital"
+          subtitle="Faixa de maior exposição digital"
           trend="-3% no controle de pausa"
           trendUp={false}
           icon={Activity}
@@ -320,9 +320,9 @@ export default function Dashboard() {
         <article className={`xl:col-span-2 rounded-3xl border p-5 shadow-xl md:p-6 ${panelClass}`}>
           <div className="mb-6 flex items-center justify-between">
             <div>
-              <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Tempo medio por regiao</h2>
+              <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Tempo médio por região</h2>
               <p className={`text-sm ${panelSubtextClass}`}>
-                Comparativo direto entre as principais regioes do pais.
+                Comparativo direto entre as principais regiões do país.
               </p>
             </div>
             <span className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs ${chipClass}`}>
@@ -364,7 +364,7 @@ export default function Dashboard() {
 
         <article className={`rounded-3xl border p-5 shadow-xl md:p-6 ${panelClass}`}>
           <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Ranking regional</h2>
-          <p className={`mt-1 text-sm ${panelSubtextClass}`}>Ordenado por media de horas diarias.</p>
+          <p className={`mt-1 text-sm ${panelSubtextClass}`}>Ordenado por média de horas diárias.</p>
 
           <ul className="mt-6 space-y-4">
             {regionalData.map((item, index) => (
@@ -389,7 +389,7 @@ export default function Dashboard() {
 
       <section ref={analysesRef} className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
         <article className={`rounded-3xl border p-5 shadow-xl md:p-6 ${panelClass}`}>
-          <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Insights rapidos</h2>
+          <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Insights rápidos</h2>
           <p className={`mt-1 text-sm ${panelSubtextClass}`}>Destaques para leitura executiva.</p>
           <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
             {highlightCards.map((card) => (
@@ -404,7 +404,7 @@ export default function Dashboard() {
 
         <article className={`rounded-3xl border p-5 shadow-xl md:p-6 ${panelClass}`}>
           <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Eventos recentes</h2>
-          <p className={`mt-1 text-sm ${panelSubtextClass}`}>Mudancas observadas na ultima consolidacao.</p>
+          <p className={`mt-1 text-sm ${panelSubtextClass}`}>Mudanças observadas na última consolidação.</p>
           <ul className="mt-5 space-y-3">
             {recentAlerts.map((alert) => (
               <li key={alert} className={`rounded-xl border px-4 py-3 text-sm ${alertCardClass}`}>
@@ -421,8 +421,8 @@ export default function Dashboard() {
         >
           <p className="text-sm font-semibold">Como usar o dashboard</p>
           <p className="mt-2 text-xs leading-relaxed">
-            Use os botoes do menu lateral para ir direto nas secoes. Em "Exportar", o sistema abre
-            um relatorio com grafico para salvar em PDF.
+            Use os botões do menu lateral para ir direto nas seções. Em "Exportar", o sistema abre
+            um relatório com gráfico para salvar em PDF.
           </p>
           <button
             type="button"
