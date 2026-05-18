@@ -1,16 +1,25 @@
 import { useState } from "react";
-import { Menu, Moon, Sun, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Menu, Moon, Sun, X, LayoutDashboard, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/useTheme";
+import { authService } from "../services/authService";
 
 const navItems = [
-  { label: "Inicio", to: "/" },
+  { label: "Início", to: "/" },
   { label: "Dashboard", to: "/dashboard" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const navigate = useNavigate();
+  const currentUser = authService.getCurrentUser();
+
+  function handleLogout() {
+    authService.logout();
+    setOpen(false);
+    navigate("/");
+  }
 
   const themeButtonClass = isDark
     ? "border-slate-700 text-slate-200 hover:bg-slate-900"
@@ -36,7 +45,7 @@ export default function Navbar() {
             TCC
           </span>
           <span className={`text-sm font-semibold md:text-base ${titleClass}`}>
-            Trabalho de Conclusao de Curso
+            Trabalho de Conclusão de Curso
           </span>
         </Link>
 
@@ -56,10 +65,29 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <Link to="/auth" className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${authButtonClass}`}
-          >
-            Login / Cadastro
-          </Link>
+          {currentUser ? (
+            <>
+              <Link
+                to="/dashboard-pais"
+                className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition ${authButtonClass}`}
+              >
+                <LayoutDashboard size={15} />
+                Meu Dashboard
+              </Link>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-semibold transition ${themeButtonClass}`}
+              >
+                <LogOut size={15} />
+                Sair
+              </button>
+            </>
+          ) : (
+            <Link to="/auth" className={`rounded-lg px-4 py-2 text-sm font-semibold transition ${authButtonClass}`}>
+              Login / Cadastro
+            </Link>
+          )}
           <button type="button" onClick={toggleTheme} className={`inline-flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium transition ${themeButtonClass}`} aria-label={isDark ? "Ativar tema claro" : "Ativar tema escuro"} title={isDark ? "Tema claro" : "Tema escuro"}
           >
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
@@ -97,9 +125,30 @@ export default function Navbar() {
               </li>
             ))}
             <li>
-              <Link to="/auth" onClick={() => setOpen(false)} className={`block rounded-lg px-3 py-2 font-semibold ${authButtonClass}`}>
-                Login
-              </Link>
+              {currentUser ? (
+                <div className="space-y-2">
+                  <Link
+                    to="/dashboard-pais"
+                    onClick={() => setOpen(false)}
+                    className={`flex items-center gap-2 rounded-lg px-3 py-2 font-semibold ${authButtonClass}`}
+                  >
+                    <LayoutDashboard size={15} />
+                    Meu Dashboard
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleLogout}
+                    className={`flex w-full items-center gap-2 rounded-lg border px-3 py-2 font-semibold transition ${themeButtonClass}`}
+                  >
+                    <LogOut size={15} />
+                    Sair
+                  </button>
+                </div>
+              ) : (
+                <Link to="/auth" onClick={() => setOpen(false)} className={`block rounded-lg px-3 py-2 font-semibold ${authButtonClass}`}>
+                  Login / Cadastro
+                </Link>
+              )}
             </li>
           </ul>
         </div>

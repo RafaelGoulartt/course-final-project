@@ -3,8 +3,8 @@ import { useTheme } from "../context/useTheme";
 
 const impacts = [
   "Informar sem alarmismo e sem linguagem complicada",
-  "Apoiar dialogos entre familia, escola e comunidade",
-  "Transformar dados em orientacoes faceis de entender",
+  "Apoiar diálogos entre família, escola e comunidade",
+  "Transformar dados em orientações fáceis de entender",
   "Incentivar uso equilibrado e mais consciente da tecnologia",
 ];
 
@@ -32,19 +32,19 @@ export default function ProblemSection() {
           </h2>
 
           <p className={`mt-5 leading-relaxed ${leftTextClass}`}>
-            A ideia deste projeto e tornar um tema importante mais acessivel para todos. Em vez de
-            apresentar apenas numeros, queremos explicar o contexto e aproximar esse debate da vida
+            A ideia deste projeto é tornar um tema importante mais acessível para todos. Em vez de
+            apresentar apenas números, queremos explicar o contexto e aproximar esse debate da vida
             real.
           </p>
 
           <p className={`mt-4 leading-relaxed ${leftTextClass}`}>
-            Sabemos que cada familia e cada escola vive uma realidade diferente. Por isso, este
-            espaco busca apoiar reflexoes praticas, sem julgamento e com foco em cuidado.
+            Sabemos que cada família e cada escola vive uma realidade diferente. Por isso, este
+            espaço busca apoiar reflexões práticas, sem julgamento e com foco em cuidado.
           </p>
 
           <p className={`mt-4 leading-relaxed ${leftTextClass}`}>
-            Nossa proposta e contribuir para decisoes mais conscientes sobre o uso de telas,
-            fortalecendo a educacao digital desde cedo.
+            Nossa proposta é contribuir para decisões mais conscientes sobre o uso de telas,
+            fortalecendo a educação digital desde cedo.
           </p>
         </article>
 
