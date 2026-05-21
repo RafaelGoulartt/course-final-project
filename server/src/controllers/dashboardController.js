@@ -252,7 +252,7 @@ export async function salvarTempoUso(req, res) {
 
     for (const item of dados) {
       const packageName = String(item?.package_name || "").trim();
-      const tempoMinutos = Number(item?.tempo_minutos);
+      const tempoMinutos = Math.round(Number(item?.tempo_minutos));
       const dataUso = String(item?.data_uso || "").trim();
       const nomeApp = String(item?.nome || packageName).trim();
 
