@@ -5,7 +5,7 @@ export default function DashboardLayout({ children, sidebarProps }) {
   const { isDark } = useTheme();
 
   return (
-    <div className={`flex min-h-screen ${isDark ? "bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-900"}`}>
+    <div className={`flex min-h-screen ${isDark ? "bg-black text-neutral-100" : "bg-white text-black"}`}>
       <Sidebar {...sidebarProps} />
 
       <main className="flex-1 overflow-y-auto">

@@ -46,26 +46,26 @@ export default function Auth() {
   const isPasswordStrong = Object.values(passwordChecks).every(Boolean);
 
   const pageClass = isDark
-    ? "bg-slate-950 text-slate-100"
-    : "bg-slate-100 text-slate-900";
+    ? "bg-black text-neutral-100"
+    : "bg-white text-black";
 
   const cardClass = isDark
-    ? "border-slate-800 bg-slate-900/80 shadow-black/20"
-    : "border-slate-200 bg-white shadow-slate-300/60";
+    ? "border-neutral-800 bg-black"
+    : "border-neutral-200 bg-white";
 
   const inputClass = useMemo(
     () =>
-      `w-full rounded-xl border px-4 py-3 text-sm outline-none transition focus:ring-2 focus:ring-sky-400 ${
+      `w-full border px-4 py-3 text-sm outline-none transition focus:border-current ${
         isDark
-          ? "border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-500"
-          : "border-slate-300 bg-white text-slate-900 placeholder:text-slate-500"
+          ? "border-neutral-700 bg-black text-neutral-100 placeholder:text-neutral-500"
+          : "border-neutral-300 bg-white text-black placeholder:text-neutral-500"
       }`,
     [isDark],
   );
 
   const sidePanelClass = isDark
-    ? "from-sky-400/90 to-cyan-300/90 text-slate-950"
-    : "from-sky-500 to-cyan-400 text-slate-950";
+    ? "bg-white text-black"
+    : "bg-black text-white";
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -117,36 +117,36 @@ export default function Auth() {
     <main className={`flex min-h-screen items-center justify-center p-4 md:p-8 ${pageClass}`}>
 
       {showSuccessModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className={`mx-4 w-full max-w-sm rounded-3xl border p-8 text-center shadow-2xl ${isDark ? "border-slate-700 bg-slate-900" : "border-slate-200 bg-white"}`}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+          <div className={`mx-4 w-full max-w-sm border p-8 text-center ${isDark ? "border-neutral-700 bg-black" : "border-neutral-200 bg-white"}`}>
             <div className="mb-4 flex justify-center">
               <CheckCircle size={56} className="text-emerald-500" />
             </div>
             <h2 className="text-2xl font-bold">Conta criada!</h2>
-            <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+            <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
               Sua conta foi criada com sucesso. Você será redirecionado para o login em instantes.
             </p>
             <div className="mt-6 flex items-center justify-center gap-2">
-              <span className="text-4xl font-bold text-sky-500">{countdown}</span>
-              <span className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>segundos</span>
+              <span className="text-4xl font-bold">{countdown}</span>
+              <span className={`text-sm ${isDark ? "text-neutral-400" : "text-neutral-500"}`}>segundos</span>
             </div>
             <button
               type="button"
               onClick={() => { setShowSuccessModal(false); setMode("login"); }}
-              className="mt-6 w-full rounded-xl bg-sky-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
+              className={`mt-6 w-full px-5 py-3 font-semibold transition ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`}
             >
               Ir para o login agora
             </button>
           </div>
         </div>
       )}
-      <section className={`w-full max-w-5xl overflow-hidden rounded-3xl border shadow-2xl ${cardClass}`}>
+      <section className={`w-full max-w-5xl overflow-hidden border ${cardClass}`}>
         <div className="grid min-h-[680px] grid-cols-1 lg:grid-cols-2">
           <div className="relative order-2 overflow-hidden px-5 py-8 md:px-10 lg:order-1 lg:p-12">
             <Link
               to="/"
               className={`mb-6 inline-flex items-center gap-2 text-sm font-semibold ${
-                isDark ? "text-slate-300 hover:text-white" : "text-slate-600 hover:text-slate-950"
+                isDark ? "text-neutral-300 hover:text-white" : "text-neutral-600 hover:text-black"
               }`}
             >
               <ArrowLeft size={16} />
@@ -161,27 +161,27 @@ export default function Auth() {
                 }`}
               >
                 <div>
-                  <h1 className="text-3xl font-bold">Entrar</h1>
-                  <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                  <h1 className="text-3xl font-bold tracking-tight">Entrar</h1>
+                  <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
                     Use seu email e senha para acessar.
                   </p>
                 </div>
 
                 <input type="email" name="email" placeholder="Seu email" required className={inputClass} value={loginData.email} onChange={(event) => setLoginData((prev) => ({ ...prev, email: event.target.value }))} />
 
-                <input type="password" name="password" placeholder="Sua senha" required className={inputClass} value={loginData.password} 
+                <input type="password" name="password" placeholder="Sua senha" required className={inputClass} value={loginData.password}
                   onChange={(event) => setLoginData((prev) => ({ ...prev, password: event.target.value }))}
                 />
 
-                <button type="submit" disabled={submitting} className="w-full rounded-xl bg-sky-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-sky-400 disabled:opacity-60" >
+                <button type="submit" disabled={submitting} className={`w-full px-5 py-3 font-semibold transition disabled:opacity-60 ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`} >
                   {submitting ? "Entrando..." : "Fazer login"}
                 </button>
               </form>
 
               <form onSubmit={handleRegisterSubmit} className={`absolute inset-0 space-y-5 transition-all duration-500 ${ isLogin ? "translate-x-10 opacity-0 pointer-events-none" : "translate-x-0 opacity-100"}`}>
                 <div>
-                  <h1 className="text-3xl font-bold">Cadastrar</h1>
-                  <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                  <h1 className="text-3xl font-bold tracking-tight">Cadastrar</h1>
+                  <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
                     Crie sua conta para começar.
                   </p>
                 </div>
@@ -195,15 +195,15 @@ export default function Auth() {
                 <div className="space-y-3">
                   <div className="relative">
                     <input type={showRegisterPassword ? "text" : "password"} name="password" placeholder="Crie uma senha" required className={`${inputClass} pr-12`} value={registerData.password} onChange={(event) => setRegisterData((prev) => ({ ...prev, password: event.target.value }))} />
-                    
-                    <button type="button" onClick={() => setShowRegisterPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 transition ${ isDark ? "text-slate-300 hover:bg-slate-800" : "text-slate-600 hover:bg-slate-100"}`}
+
+                    <button type="button" onClick={() => setShowRegisterPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 transition ${ isDark ? "text-neutral-300 hover:bg-neutral-900" : "text-neutral-600 hover:bg-neutral-100"}`}
                       aria-label={showRegisterPassword ? "Ocultar senha" : "Visualizar senha"}
                     >
                       {showRegisterPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
 
-                  <div className={`rounded-xl border p-3 text-xs ${isDark ? "border-slate-700" : "border-slate-300"}`}>
+                  <div className={`border p-3 text-xs ${isDark ? "border-neutral-700" : "border-neutral-300"}`}>
                     <p className="mb-2 font-semibold">Senha deve conter:</p>
                     <ul className="space-y-1">
                       <li className={passwordChecks.minLength ? "text-emerald-500" : "text-rose-500"}>
@@ -231,12 +231,12 @@ export default function Auth() {
                       setRegisterData((prev) => ({ ...prev, confirmPassword: event.target.value }))
                     }
                   />
-                  <button type="button" onClick={() => setShowRegisterConfirmPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 transition ${ isDark ? "text-slate-300 hover:bg-slate-800" : "text-slate-600 hover:bg-slate-100" }`} aria-label={showRegisterConfirmPassword ? "Ocultar senha" : "Visualizar senha"}>
+                  <button type="button" onClick={() => setShowRegisterConfirmPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 transition ${ isDark ? "text-neutral-300 hover:bg-neutral-900" : "text-neutral-600 hover:bg-neutral-100" }`} aria-label={showRegisterConfirmPassword ? "Ocultar senha" : "Visualizar senha"}>
                     {showRegisterConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
 
-                <button type="submit" disabled={submitting || !isPasswordStrong} className="w-full rounded-xl bg-sky-500 px-5 py-3 font-semibold text-slate-950 transition hover:bg-sky-400 disabled:opacity-60">
+                <button type="submit" disabled={submitting || !isPasswordStrong} className={`w-full px-5 py-3 font-semibold transition disabled:opacity-60 ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`}>
                   {submitting ? "Cadastrando..." : "Criar conta"}
                 </button>
               </form>
@@ -254,10 +254,10 @@ export default function Auth() {
           </div>
 
           <div
-            className={`order-1 flex flex-col justify-center bg-gradient-to-br p-8 transition-all duration-500 md:p-12 lg:order-2 ${sidePanelClass}`}
+            className={`order-1 flex flex-col justify-center p-8 transition-all duration-500 md:p-12 lg:order-2 ${sidePanelClass}`}
           >
             <p className="text-sm font-semibold uppercase tracking-widest">Acesso da plataforma</p>
-            <h2 className="mt-4 text-3xl font-bold leading-tight md:text-4xl">
+            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight md:text-4xl">
               {isLogin ? "Novo por aqui?" : "Já possui conta?"}
             </h2>
             <p className="mt-4 max-w-md text-sm md:text-base">
@@ -269,7 +269,7 @@ export default function Auth() {
             <button
               type="button"
               onClick={() => setMode(isLogin ? "register" : "login")}
-              className="mt-8 w-fit rounded-xl bg-slate-950 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:bg-slate-900"
+              className={`mt-8 w-fit px-6 py-3 text-sm font-semibold transition ${isDark ? "bg-black text-white hover:bg-neutral-900" : "bg-white text-black hover:bg-neutral-200"}`}
             >
               {isLogin ? "Cadastrar" : "Fazer login"}
             </button>

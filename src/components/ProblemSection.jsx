@@ -10,24 +10,19 @@ const impacts = [
 
 export default function ProblemSection() {
   const { isDark } = useTheme();
-  const leftCardClass = isDark
-    ? "border-slate-800 bg-slate-900/70 shadow-black/20"
-    : "border-slate-200 bg-white/90 shadow-slate-300/40";
-  const leftTitleClass = isDark ? "text-white" : "text-slate-900";
-  const leftTextClass = isDark ? "text-slate-300" : "text-slate-700";
-  const rightCardClass = isDark
-    ? "border-sky-500/30 from-sky-900/40 to-cyan-900/20 shadow-black/20"
-    : "border-sky-200 from-sky-50 to-cyan-50 shadow-slate-300/40";
-  const badgeClass = isDark ? "bg-sky-500/20 text-sky-200" : "bg-sky-100 text-sky-700";
-  const rightTitleClass = isDark ? "text-white" : "text-slate-900";
-  const listTextClass = isDark ? "text-slate-200" : "text-slate-700";
-  const iconClass = isDark ? "text-sky-300" : "text-sky-600";
+  const leftCardClass = isDark ? "border-neutral-800" : "border-neutral-200";
+  const leftTitleClass = isDark ? "text-white" : "text-black";
+  const leftTextClass = isDark ? "text-neutral-400" : "text-neutral-600";
+  const rightCardClass = isDark ? "bg-white text-black" : "bg-black text-white";
+  const badgeClass = isDark ? "border-neutral-300 text-neutral-600" : "border-neutral-700 text-neutral-400";
+  const listTextClass = isDark ? "text-neutral-700" : "text-neutral-300";
+  const iconClass = isDark ? "text-black" : "text-white";
 
   return (
     <section id="sobre" className="py-16 md:py-20">
       <div className="mx-auto grid w-full max-w-7xl gap-6 px-4 md:grid-cols-2 md:gap-8 md:px-6">
-        <article className={`rounded-3xl border p-6 shadow-xl md:p-8 ${leftCardClass}`}>
-          <h2 className={`text-3xl font-bold md:text-4xl ${leftTitleClass}`}>
+        <article className={`border p-6 md:p-8 ${leftCardClass}`}>
+          <h2 className={`text-3xl font-bold tracking-tight md:text-4xl ${leftTitleClass}`}>
             Por que este site foi criado
           </h2>
 
@@ -48,13 +43,13 @@ export default function ProblemSection() {
           </p>
         </article>
 
-        <article className={`rounded-3xl border bg-gradient-to-br p-6 shadow-xl md:p-8 ${rightCardClass}`}>
+        <article className={`p-6 md:p-8 ${rightCardClass}`}>
           <p
-            className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${badgeClass}`}
+            className={`inline-flex border px-3 py-1 text-xs font-semibold uppercase tracking-wider ${badgeClass}`}
           >
             O que estamos tentando realizar
           </p>
-          <h3 className={`mt-4 text-2xl font-bold ${rightTitleClass}`}>Compromissos do projeto</h3>
+          <h3 className="mt-4 text-2xl font-bold tracking-tight">Compromissos do projeto</h3>
 
           <ul className="mt-6 space-y-4">
             {impacts.map((item) => (

@@ -13,32 +13,33 @@ export default function Hero() {
   const { isDark } = useTheme();
 
   const badgeClass = isDark
-    ? "bg-sky-500/15 text-sky-200"
-    : "bg-sky-100 text-sky-700 ring-1 ring-sky-200";
-  const titleClass = isDark ? "text-white" : "text-slate-900";
-  const textClass = isDark ? "text-slate-300" : "text-slate-700";
+    ? "border-neutral-800 text-neutral-400"
+    : "border-neutral-300 text-neutral-600";
+  const titleClass = isDark ? "text-white" : "text-black";
+  const textClass = isDark ? "text-neutral-400" : "text-neutral-600";
+  const primaryButtonClass = isDark
+    ? "bg-white text-black hover:bg-neutral-200"
+    : "bg-black text-white hover:bg-neutral-800";
   const secondaryButtonClass = isDark
-    ? "border-slate-700 text-slate-100 hover:bg-slate-900"
-    : "border-slate-300 text-slate-800 hover:bg-slate-100";
-  const cardClass = isDark
-    ? "border-slate-800 bg-slate-900/70 shadow-black/20"
-    : "border-slate-200 bg-white/90 shadow-slate-300/40";
-  const highlightValueClass = isDark ? "text-white" : "text-slate-900";
-  const highlightLabelClass = isDark ? "text-slate-400" : "text-slate-600";
+    ? "border-neutral-700 text-neutral-100 hover:border-white"
+    : "border-neutral-300 text-neutral-800 hover:border-black";
+  const cardClass = isDark ? "border-neutral-800" : "border-neutral-200";
+  const highlightValueClass = isDark ? "text-white" : "text-black";
+  const highlightLabelClass = isDark ? "text-neutral-500" : "text-neutral-500";
   const iconClass = isDark
-    ? "bg-sky-500/20 text-sky-300 ring-sky-400/30"
-    : "bg-sky-100 text-sky-700 ring-sky-300";
+    ? "border-neutral-700 text-neutral-300"
+    : "border-neutral-300 text-neutral-700";
 
   return (
     <section className="relative overflow-hidden pt-28 md:pt-36">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-4 pb-20 md:px-6">
         <div className="max-w-3xl">
           <p
-            className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider ${badgeClass}`}
+            className={`inline-flex items-center gap-2 border px-3 py-1 text-xs font-semibold uppercase tracking-wider ${badgeClass}`}
           >
             Projeto de conscientização digital
           </p>
-          <h1 className={`mt-5 text-4xl font-bold leading-tight md:text-6xl ${titleClass}`}>
+          <h1 className={`mt-5 text-4xl font-bold leading-tight tracking-tight md:text-6xl ${titleClass}`}>
             Este site existe para explicar, de forma simples, o impacto das telas na infância
           </h1>
           <p className={`mt-5 text-base md:text-lg ${textClass}`}>
@@ -50,13 +51,13 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href="#sobre"
-              className="rounded-xl bg-sky-500 px-6 py-3 font-semibold text-slate-950 transition hover:bg-sky-400"
+              className={`px-6 py-3 font-semibold transition ${primaryButtonClass}`}
             >
               Entender a proposta
             </a>
             <Link
               to="/dashboard"
-              className={`rounded-xl border px-6 py-3 font-semibold transition ${secondaryButtonClass}`}
+              className={`border px-6 py-3 font-semibold transition ${secondaryButtonClass}`}
             >
               Ver dados detalhados
             </Link>
@@ -67,13 +68,13 @@ export default function Hero() {
           {highlights.map(({ label, value, icon: Icon }) => (
             <article
               key={label}
-              className={`rounded-2xl border p-5 shadow-lg ${cardClass}`}
+              className={`border p-6 ${cardClass}`}
             >
-              <span className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ring-1 ${iconClass}`}>
+              <span className={`inline-flex h-10 w-10 items-center justify-center border ${iconClass}`}>
                 {createElement(Icon, { size: 18 })}
               </span>
               <p className={`mt-4 text-3xl font-bold ${highlightValueClass}`}>{value}</p>
-              <p className={`mt-1 text-sm ${highlightLabelClass}`}>{label}</p>
+              <p className={`mt-1 text-sm uppercase tracking-wide ${highlightLabelClass}`}>{label}</p>
             </article>
           ))}
         </div>
