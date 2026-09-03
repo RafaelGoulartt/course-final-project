@@ -64,34 +64,34 @@ export default function Dashboard() {
   const analysesRef = useRef(null);
 
   const backButtonClass = isDark
-    ? "border-neutral-800 bg-black text-neutral-200 hover:border-neutral-600 hover:text-white"
-    : "border-neutral-300 bg-white text-neutral-700 hover:border-neutral-500 hover:text-black";
-  const heroClass = isDark ? "border-neutral-800" : "border-neutral-200";
+    ? "rounded-md border-slate-700 bg-slate-900 text-slate-200 hover:border-slate-500 hover:text-slate-50"
+    : "rounded-md border-slate-300 bg-slate-50 text-slate-700 hover:border-slate-400 hover:text-slate-900";
+  const heroClass = isDark ? "rounded-lg border-slate-800" : "rounded-lg border-slate-200";
   const badgeClass = isDark
-    ? "border-neutral-700 text-neutral-400"
-    : "border-neutral-300 text-neutral-600";
-  const headingClass = isDark ? "text-white" : "text-black";
-  const textClass = isDark ? "text-neutral-400" : "text-neutral-600";
+    ? "rounded-md border-slate-700 text-blue-400"
+    : "rounded-md border-slate-300 text-blue-600";
+  const headingClass = isDark ? "text-slate-50" : "text-slate-900";
+  const textClass = isDark ? "text-slate-400" : "text-slate-600";
   const smallCardClass = isDark
-    ? "border-neutral-800 text-neutral-400"
-    : "border-neutral-200 text-neutral-600";
-  const smallCardAccentClass = isDark ? "text-white" : "text-black";
-  const panelClass = isDark ? "border-neutral-800" : "border-neutral-200";
-  const panelHeadingClass = isDark ? "text-white" : "text-black";
-  const panelSubtextClass = isDark ? "text-neutral-400" : "text-neutral-600";
-  const chipClass = isDark ? "border border-neutral-700 text-neutral-400" : "border border-neutral-300 text-neutral-600";
-  const rankingLabelClass = isDark ? "text-neutral-300" : "text-neutral-700";
-  const rankingValueClass = isDark ? "text-white" : "text-black";
-  const barTrackClass = isDark ? "bg-neutral-800" : "bg-neutral-200";
-  const insightCardClass = isDark ? "border-neutral-800" : "border-neutral-200";
-  const insightTitleClass = isDark ? "text-neutral-500" : "text-neutral-500";
-  const insightValueClass = isDark ? "text-white" : "text-black";
+    ? "rounded-md border-slate-800 text-slate-400"
+    : "rounded-md border-slate-200 text-slate-600";
+  const smallCardAccentClass = isDark ? "text-slate-50" : "text-slate-900";
+  const panelClass = isDark ? "rounded-lg border-slate-800" : "rounded-lg border-slate-200";
+  const panelHeadingClass = isDark ? "text-slate-50" : "text-slate-900";
+  const panelSubtextClass = isDark ? "text-slate-400" : "text-slate-600";
+  const chipClass = isDark ? "rounded-md border border-slate-700 text-slate-400" : "rounded-md border border-slate-300 text-slate-600";
+  const rankingLabelClass = isDark ? "text-slate-300" : "text-slate-700";
+  const rankingValueClass = isDark ? "text-slate-50" : "text-slate-900";
+  const barTrackClass = isDark ? "rounded-full bg-slate-800" : "rounded-full bg-slate-200";
+  const insightCardClass = isDark ? "rounded-md border-slate-800" : "rounded-md border-slate-200";
+  const insightTitleClass = isDark ? "text-slate-500" : "text-slate-500";
+  const insightValueClass = isDark ? "text-slate-50" : "text-slate-900";
   const alertCardClass = isDark
-    ? "border-neutral-800 text-neutral-400"
-    : "border-neutral-200 text-neutral-600";
+    ? "rounded-md border-slate-800 text-slate-400"
+    : "rounded-md border-slate-200 text-slate-600";
   const helpBoxClass = isDark
-    ? "border-neutral-800 bg-black text-neutral-200"
-    : "border-neutral-200 bg-white text-neutral-700";
+    ? "rounded-lg border-slate-800 bg-slate-900 text-slate-200"
+    : "rounded-lg border-slate-200 bg-slate-50 text-slate-700";
 
   const sectionMap = useMemo(
     () => ({
@@ -120,12 +120,12 @@ export default function Dashboard() {
         const width = Math.round((item.horas / maxHours) * 100);
         return `
           <div style="margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;font-size:12px;color:#525252;margin-bottom:4px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;color:#475569;margin-bottom:4px;">
               <span>${item.name}</span>
               <strong>${item.horas}h</strong>
             </div>
-            <div style="height:8px;background:#e5e5e5;overflow:hidden;">
-              <div style="height:100%;width:${width}%;background:#000000;"></div>
+            <div style="height:8px;background:#e2e8f0;overflow:hidden;border-radius:999px;">
+              <div style="height:100%;width:${width}%;background:#3b82f6;"></div>
             </div>
           </div>
         `;
@@ -136,9 +136,9 @@ export default function Dashboard() {
       .map(
         (item, index) => `
           <tr>
-            <td style="padding:8px;border-bottom:1px solid #e5e5e5;">${index + 1}</td>
-            <td style="padding:8px;border-bottom:1px solid #e5e5e5;">${item.name}</td>
-            <td style="padding:8px;border-bottom:1px solid #e5e5e5;text-align:right;"><strong>${item.horas}h</strong></td>
+            <td style="padding:8px;border-bottom:1px solid #e2e8f0;">${index + 1}</td>
+            <td style="padding:8px;border-bottom:1px solid #e2e8f0;">${item.name}</td>
+            <td style="padding:8px;border-bottom:1px solid #e2e8f0;text-align:right;"><strong>${item.horas}h</strong></td>
           </tr>
         `,
       )
@@ -155,21 +155,21 @@ export default function Dashboard() {
           <title>ScreenTime BI - Relatório</title>
           <style>
             * { box-sizing: border-box; }
-            body { font-family: Arial, sans-serif; margin: 0; padding: 28px; color: #0a0a0a; background: #ffffff; }
+            body { font-family: Arial, sans-serif; margin: 0; padding: 28px; color: #0f172a; background: #f8fafc; }
             .header { margin-bottom: 20px; }
-            .badge { display: inline-block; font-size: 11px; font-weight: 700; color: #ffffff; background: #000000; padding: 5px 10px; }
+            .badge { display: inline-block; font-size: 11px; font-weight: 700; color: #ffffff; background: #3b82f6; padding: 5px 10px; border-radius: 4px; }
             h1 { margin: 12px 0 6px; font-size: 24px; }
-            .sub { color: #525252; font-size: 13px; margin: 0; }
+            .sub { color: #475569; font-size: 13px; margin: 0; }
             .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 18px; margin-top: 18px; }
-            .card { border: 1px solid #e5e5e5; background: white; padding: 16px; }
+            .card { border: 1px solid #e2e8f0; background: white; padding: 16px; border-radius: 8px; }
             .card h2 { margin: 0 0 10px; font-size: 16px; }
             table { width: 100%; border-collapse: collapse; font-size: 13px; }
-            th { text-align: left; color: #525252; font-size: 12px; letter-spacing: .02em; border-bottom: 1px solid #d4d4d4; padding: 8px; }
+            th { text-align: left; color: #475569; font-size: 12px; letter-spacing: .02em; border-bottom: 1px solid #cbd5e1; padding: 8px; }
             .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
-            .kpi { border: 1px solid #e5e5e5; background: white; padding: 12px; }
-            .kpi .label { font-size: 12px; color: #737373; margin-bottom: 6px; }
-            .kpi .value { font-size: 20px; font-weight: 700; color: #0a0a0a; }
-            .foot { margin-top: 18px; font-size: 11px; color: #737373; }
+            .kpi { border: 1px solid #e2e8f0; background: white; padding: 12px; border-radius: 8px; }
+            .kpi .label { font-size: 12px; color: #64748b; margin-bottom: 6px; }
+            .kpi .value { font-size: 20px; font-weight: 700; color: #0f172a; }
+            .foot { margin-top: 18px; font-size: 11px; color: #64748b; }
             @media print { body { background: white; padding: 16px; } }
           </style>
         </head>
@@ -271,7 +271,7 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section ref={classesRef} className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <section ref={classesRef} className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <KPI
           title="Média nacional"
           value="2.5h"
@@ -310,8 +310,8 @@ export default function Dashboard() {
         />
       </section>
 
-      <section ref={regionsRef} className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-3">
-        <article className={`xl:col-span-2 border p-5 md:p-6 ${panelClass}`}>
+      <section ref={regionsRef} className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <article className={`lg:col-span-2 border p-5 md:p-6 ${panelClass}`}>
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Tempo médio por região</h2>
@@ -328,29 +328,29 @@ export default function Dashboard() {
           <div className="h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={regionalData} margin={{ top: 6, right: 6, left: -8, bottom: 12 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#262626" : "#e5e5e5"} />
+                <CartesianGrid strokeDasharray="3 3" stroke={isDark ? "#334155" : "#e2e8f0"} />
                 <XAxis
                   dataKey="name"
-                  tick={{ fill: isDark ? "#a3a3a3" : "#525252", fontSize: 12 }}
+                  tick={{ fill: isDark ? "#94a3b8" : "#475569", fontSize: 12 }}
                   tickLine={false}
                   axisLine={false}
                   tickMargin={10}
                 />
                 <YAxis
                   unit="h"
-                  tick={{ fill: isDark ? "#a3a3a3" : "#525252", fontSize: 12 }}
+                  tick={{ fill: isDark ? "#94a3b8" : "#475569", fontSize: 12 }}
                   tickLine={false}
                   axisLine={false}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: isDark ? "#000000" : "#ffffff",
-                    borderColor: isDark ? "#262626" : "#e5e5e5",
-                    color: isDark ? "#f5f5f5" : "#0a0a0a",
-                    borderRadius: "0px",
+                    backgroundColor: isDark ? "#0f172a" : "#ffffff",
+                    borderColor: isDark ? "#334155" : "#e2e8f0",
+                    color: isDark ? "#f8fafc" : "#0f172a",
+                    borderRadius: "6px",
                   }}
                 />
-                <Bar dataKey="horas" fill={isDark ? "#ffffff" : "#000000"} radius={[0, 0, 0, 0]} barSize={34} />
+                <Bar dataKey="horas" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={34} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -371,7 +371,7 @@ export default function Dashboard() {
                 </div>
                 <div className={`h-2 ${barTrackClass}`}>
                   <div
-                    className={isDark ? "h-full bg-white" : "h-full bg-black"}
+                    className="h-full rounded-full bg-blue-500"
                     style={{ width: `${(item.horas / 3.2) * 100}%` }}
                   />
                 </div>
@@ -381,7 +381,7 @@ export default function Dashboard() {
         </article>
       </section>
 
-      <section ref={analysesRef} className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
+      <section ref={analysesRef} className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <article className={`border p-5 md:p-6 ${panelClass}`}>
           <h2 className={`text-xl font-semibold ${panelHeadingClass}`}>Insights rápidos</h2>
           <p className={`mt-1 text-sm ${panelSubtextClass}`}>Destaques para leitura executiva.</p>
@@ -421,7 +421,7 @@ export default function Dashboard() {
           <button
             type="button"
             onClick={() => setShowHelp(false)}
-            className={`mt-3 px-3 py-1.5 text-xs font-semibold ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`}
+            className="mt-3 rounded-md bg-blue-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-600"
           >
             Fechar
           </button>

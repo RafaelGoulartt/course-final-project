@@ -25,15 +25,15 @@ const stats = [
 
 export default function StatsSection() {
   const { isDark } = useTheme();
-  const titleClass = isDark ? "text-white" : "text-black";
-  const textClass = isDark ? "text-neutral-500" : "text-neutral-600";
-  const cardClass = isDark ? "border-neutral-800" : "border-neutral-200";
-  const itemTitleClass = isDark ? "text-neutral-500" : "text-neutral-500";
-  const itemValueClass = isDark ? "text-white" : "text-black";
-  const itemDescriptionClass = isDark ? "text-neutral-500" : "text-neutral-600";
+  const titleClass = isDark ? "text-slate-50" : "text-slate-900";
+  const textClass = isDark ? "text-slate-500" : "text-slate-600";
+  const cardClass = isDark ? "rounded-lg border-slate-800" : "rounded-lg border-slate-200";
+  const itemTitleClass = isDark ? "text-slate-500" : "text-slate-500";
+  const itemValueClass = isDark ? "text-slate-50" : "text-slate-900";
+  const itemDescriptionClass = isDark ? "text-slate-500" : "text-slate-600";
   const iconClass = isDark
-    ? "border-neutral-700 text-neutral-300"
-    : "border-neutral-300 text-neutral-700";
+    ? "rounded-md border-slate-700 text-blue-400"
+    : "rounded-md border-slate-300 text-blue-600";
 
   return (
     <section className="py-16 md:py-20">

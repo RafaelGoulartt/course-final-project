@@ -22,26 +22,24 @@ export default function Navbar() {
   }
 
   const themeButtonClass = isDark
-    ? "border-neutral-800 text-neutral-200 hover:border-neutral-600"
-    : "border-neutral-300 text-neutral-700 hover:border-neutral-500";
+    ? "rounded-md border-slate-700 text-slate-200 hover:border-slate-500"
+    : "rounded-md border-slate-300 text-slate-700 hover:border-slate-400";
 
   const headerClass = isDark
-    ? "border-neutral-900 bg-black"
-    : "border-neutral-200 bg-white";
+    ? "border-slate-800 bg-slate-900"
+    : "border-slate-200 bg-slate-50";
 
-  const navTextClass = isDark ? "text-neutral-400" : "text-neutral-600";
-  const titleClass = isDark ? "text-white" : "text-black";
-  const authButtonClass = isDark
-    ? "bg-white text-black hover:bg-neutral-200"
-    : "bg-black text-white hover:bg-neutral-800";
-  const mobilePanelClass = isDark ? "border-neutral-900 bg-black" : "border-neutral-200 bg-white";
-  const mobileHoverClass = isDark ? "hover:bg-neutral-900" : "hover:bg-neutral-100";
+  const navTextClass = isDark ? "text-slate-400" : "text-slate-600";
+  const titleClass = isDark ? "text-slate-50" : "text-slate-900";
+  const authButtonClass = "rounded-md bg-blue-500 text-white hover:bg-blue-600";
+  const mobilePanelClass = isDark ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-slate-50";
+  const mobileHoverClass = isDark ? "rounded-md hover:bg-slate-800" : "rounded-md hover:bg-slate-100";
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 border-b ${headerClass}`}>
       <nav className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 md:px-6">
         <Link to="/" className="flex items-center gap-3" onClick={() => setOpen(false)}>
-          <span className={`inline-flex h-9 w-9 items-center justify-center text-sm font-bold ${isDark ? "bg-white text-black" : "bg-black text-white"}`}>
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-blue-500 text-sm font-bold text-white">
             TCC
           </span>
           <span className={`text-sm font-medium uppercase tracking-wide md:text-base ${titleClass}`}>
@@ -54,11 +52,11 @@ export default function Navbar() {
             {navItems.map((item) => (
               <li key={item.label}>
                 {item.to ? (
-                  <Link className={`transition ${isDark ? "hover:text-white" : "hover:text-black"}`} to={item.to}>
+                  <Link className="transition hover:text-blue-500" to={item.to}>
                     {item.label}
                   </Link>
                 ) : (
-                  <a className={`transition ${isDark ? "hover:text-white" : "hover:text-black"}`} href={item.href}>
+                  <a className="transition hover:text-blue-500" href={item.href}>
                     {item.label}
                   </a>
                 )}
@@ -109,7 +107,7 @@ export default function Navbar() {
 
       {open && (
         <div className={`border-t px-4 py-4 md:hidden ${mobilePanelClass}`}>
-          <ul className={`space-y-3 text-sm ${isDark ? "text-neutral-300" : "text-neutral-700"}`}>
+          <ul className={`space-y-3 text-sm ${isDark ? "text-slate-300" : "text-slate-700"}`}>
             {navItems.map((item) => (
               <li key={item.label}>
                 {item.to ? (

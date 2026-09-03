@@ -10,13 +10,13 @@ const impacts = [
 
 export default function ProblemSection() {
   const { isDark } = useTheme();
-  const leftCardClass = isDark ? "border-neutral-800" : "border-neutral-200";
-  const leftTitleClass = isDark ? "text-white" : "text-black";
-  const leftTextClass = isDark ? "text-neutral-400" : "text-neutral-600";
-  const rightCardClass = isDark ? "bg-white text-black" : "bg-black text-white";
-  const badgeClass = isDark ? "border-neutral-300 text-neutral-600" : "border-neutral-700 text-neutral-400";
-  const listTextClass = isDark ? "text-neutral-700" : "text-neutral-300";
-  const iconClass = isDark ? "text-black" : "text-white";
+  const leftCardClass = isDark ? "rounded-lg border-slate-800" : "rounded-lg border-slate-200";
+  const leftTitleClass = isDark ? "text-slate-50" : "text-slate-900";
+  const leftTextClass = isDark ? "text-slate-400" : "text-slate-600";
+  const rightCardClass = "rounded-lg bg-blue-500 text-white";
+  const badgeClass = "rounded-md border-white/40 text-white";
+  const listTextClass = "text-white";
+  const iconClass = "text-white";
 
   return (
     <section id="sobre" className="py-16 md:py-20">

@@ -13,12 +13,12 @@ export default function KPI({
 
   const TrendIcon = trendUp ? ArrowUpRight : ArrowDownRight;
 
-  const cardClass = isDark ? "border-neutral-800" : "border-neutral-200";
-  const iconClass = isDark ? "border-neutral-700 text-neutral-300" : "border-neutral-300 text-neutral-700";
+  const cardClass = isDark ? "rounded-lg border-slate-800" : "rounded-lg border-slate-200";
+  const iconClass = isDark ? "rounded-md border-slate-700 text-blue-400" : "rounded-md border-slate-300 text-blue-600";
 
-  const titleClass = isDark ? "text-neutral-500" : "text-neutral-500";
-  const valueClass = isDark ? "text-white" : "text-black";
-  const subtitleClass = isDark ? "text-neutral-500" : "text-neutral-500";
+  const titleClass = isDark ? "text-slate-500" : "text-slate-500";
+  const valueClass = isDark ? "text-slate-50" : "text-slate-900";
+  const subtitleClass = isDark ? "text-slate-500" : "text-slate-500";
 
   return (
     <article className={`border p-5 ${cardClass}`}>

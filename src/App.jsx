@@ -20,7 +20,7 @@ function AppRoutes() {
       >
         <div className="flex flex-col items-center gap-3">
           <div
-            className={`h-12 w-12 animate-spin rounded-full border-4 border-t-sky-400 ${
+            className={`h-12 w-12 animate-spin rounded-full border-4 border-t-blue-500 ${
               isDark ? "border-slate-700" : "border-slate-300"
             }`}
           />

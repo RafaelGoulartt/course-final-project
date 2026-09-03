@@ -136,12 +136,12 @@ export default function ParentsDashboard() {
     if (dayChartInstance.current) { dayChartInstance.current.destroy(); dayChartInstance.current = null; }
     if (!canRender || !appChartRef.current || !dayChartRef.current) return;
 
-    const labelColor = isDark ? "#d4d4d4" : "#404040";
-    const gridColor = isDark ? "rgba(163,163,163,0.2)" : "rgba(115,115,115,0.15)";
+    const labelColor = isDark ? "#cbd5e1" : "#334155";
+    const gridColor = isDark ? "rgba(148,163,184,0.2)" : "rgba(100,116,139,0.15)";
 
-    const grayscale = isDark
-      ? ["#ffffff", "#d4d4d4", "#a3a3a3", "#737373", "#525252", "#e5e5e5"]
-      : ["#000000", "#404040", "#737373", "#a3a3a3", "#262626", "#525252"];
+    const blueScale = isDark
+      ? ["#60a5fa", "#3b82f6", "#93c5fd", "#2563eb", "#bfdbfe", "#1d4ed8"]
+      : ["#3b82f6", "#1d4ed8", "#93c5fd", "#2563eb", "#bfdbfe", "#60a5fa"];
 
     appChartInstance.current = new Chart(appChartRef.current, {
       type: "pie",
@@ -150,8 +150,8 @@ export default function ParentsDashboard() {
         datasets: [{
           label: "Tempo de uso (min)",
           data: tempoPorApp.map((item) => Number(item.total)),
-          backgroundColor: grayscale,
-          borderColor: isDark ? "#000000" : "#ffffff",
+          backgroundColor: blueScale,
+          borderColor: isDark ? "#0f172a" : "#ffffff",
           borderWidth: 1,
         }],
       },
@@ -169,8 +169,8 @@ export default function ParentsDashboard() {
         datasets: [{
           label: "Minutos por dia",
           data: tempoPorDia.map((item) => Number(item.total)),
-          borderColor: isDark ? "#ffffff" : "#000000",
-          backgroundColor: isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.08)",
+          borderColor: "#3b82f6",
+          backgroundColor: "rgba(59,130,246,0.15)",
           borderWidth: 2,
           fill: true,
           tension: 0.3,
@@ -204,32 +204,32 @@ export default function ParentsDashboard() {
 
   const t = isDark
     ? {
-        main: "bg-black text-neutral-100",
-        shell: "border-neutral-800",
-        panel: "border-neutral-800",
-        panelSoft: "border-neutral-800",
-        textSoft: "text-neutral-300",
-        textMuted: "text-neutral-500",
-        btnPrimary: "bg-white text-black hover:bg-neutral-200",
-        btnGhost: "border-neutral-800 bg-black text-neutral-200 hover:border-neutral-600",
-        input: "border-neutral-700 bg-black text-neutral-100",
-        tag: "border border-neutral-700 text-neutral-400",
-        stepBg: "border border-neutral-800",
-        modalBg: "bg-black border-neutral-800",
+        main: "bg-slate-900 text-slate-100",
+        shell: "rounded-lg border-slate-800",
+        panel: "rounded-lg border-slate-800",
+        panelSoft: "rounded-md border-slate-800",
+        textSoft: "text-slate-300",
+        textMuted: "text-slate-500",
+        btnPrimary: "rounded-md bg-blue-500 text-white hover:bg-blue-600",
+        btnGhost: "rounded-md border-slate-700 bg-slate-900 text-slate-200 hover:border-slate-500",
+        input: "rounded-md border-slate-700 bg-slate-900 text-slate-100",
+        tag: "rounded-md border border-slate-700 text-blue-400",
+        stepBg: "rounded-md border border-slate-800",
+        modalBg: "rounded-lg bg-slate-900 border-slate-800",
       }
     : {
-        main: "bg-white text-black",
-        shell: "border-neutral-200",
-        panel: "border-neutral-200",
-        panelSoft: "border-neutral-200",
-        textSoft: "text-neutral-700",
-        textMuted: "text-neutral-500",
-        btnPrimary: "bg-black text-white hover:bg-neutral-800",
-        btnGhost: "border-neutral-300 bg-white text-neutral-700 hover:border-neutral-500",
-        input: "border-neutral-300 bg-white text-black",
-        tag: "border border-neutral-300 text-neutral-600",
-        stepBg: "border border-neutral-200",
-        modalBg: "bg-white border-neutral-200",
+        main: "bg-slate-50 text-slate-900",
+        shell: "rounded-lg border-slate-200",
+        panel: "rounded-lg border-slate-200",
+        panelSoft: "rounded-md border-slate-200",
+        textSoft: "text-slate-700",
+        textMuted: "text-slate-500",
+        btnPrimary: "rounded-md bg-blue-500 text-white hover:bg-blue-600",
+        btnGhost: "rounded-md border-slate-300 bg-white text-slate-700 hover:border-slate-400",
+        input: "rounded-md border-slate-300 bg-white text-slate-900",
+        tag: "rounded-md border border-slate-300 text-blue-600",
+        stepBg: "rounded-md border border-slate-200",
+        modalBg: "rounded-lg bg-white border-slate-200",
       };
 
   const steps = [
@@ -267,7 +267,7 @@ export default function ParentsDashboard() {
             <div className="space-y-5">
               {steps.map((step) => (
                 <div key={step.num} className={`flex gap-4 p-4 ${t.stepBg}`}>
-                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center border ${isDark ? "border-neutral-700" : "border-neutral-300"}`}>
+                  <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-md border text-blue-500 ${isDark ? "border-slate-700" : "border-slate-300"}`}>
                     {step.icon}
                   </div>
                   <div>
@@ -302,7 +302,7 @@ export default function ParentsDashboard() {
                 Aqui você acompanha o tempo de tela dos seus filhos.
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button type="button" onClick={() => setShowInstructions(true)} className={`inline-flex items-center gap-2 border px-4 py-2 text-sm font-semibold transition ${t.btnGhost}`}>
                 <HelpCircle size={16} />
                 Como usar?
@@ -338,8 +338,8 @@ export default function ParentsDashboard() {
             <div>
               <label className={`mb-1 block text-xs font-semibold uppercase tracking-wide ${t.textMuted}`}>Editar nome</label>
               <div className="flex gap-2">
-                <input type="text" value={nomeEdicaoFilho} onChange={(e) => setNomeEdicaoFilho(e.target.value)} disabled={!filhoSelecionadoId || salvandoFilho} placeholder="Nome do filho" className={`w-full border px-3 py-2 text-sm outline-none ${t.input}`} />
-                <button type="button" onClick={handleSalvarNomeFilho} disabled={!filhoSelecionadoId || !nomeEdicaoFilho.trim() || salvandoFilho} className={`px-3 py-2 text-sm font-semibold transition disabled:opacity-50 ${t.btnPrimary}`}>
+                <input type="text" value={nomeEdicaoFilho} onChange={(e) => setNomeEdicaoFilho(e.target.value)} disabled={!filhoSelecionadoId || salvandoFilho} placeholder="Nome do filho" className={`min-w-0 flex-1 border px-3 py-2 text-sm outline-none ${t.input}`} />
+                <button type="button" onClick={handleSalvarNomeFilho} disabled={!filhoSelecionadoId || !nomeEdicaoFilho.trim() || salvandoFilho} className={`shrink-0 px-3 py-2 text-sm font-semibold transition disabled:opacity-50 ${t.btnPrimary}`}>
                   Salvar
                 </button>
               </div>
@@ -349,7 +349,7 @@ export default function ParentsDashboard() {
 
         <section className={`mt-4 border p-5 ${t.panel}`}>
           <div className="flex items-center gap-2">
-            <KeyRound size={18} />
+            <KeyRound size={18} className="text-blue-500" />
             <p className="font-bold">Código de conexão</p>
           </div>
           <p className={`mt-1 text-sm ${t.textMuted}`}>
@@ -385,7 +385,7 @@ export default function ParentsDashboard() {
         </section>
 
         {canRenderCharts ? (
-          <section className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-2">
+          <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
             <article className={`border p-5 ${t.panel}`}>
               <h3 className="font-bold">App mais usado</h3>
               <p className={`text-sm ${t.textMuted}`}>Minutos por aplicativo</p>

@@ -35,10 +35,10 @@ export default function Sidebar({
   return (
     <>
       <button
-        className={`fixed left-4 top-4 z-50 border p-2 md:hidden ${
+        className={`fixed left-4 top-4 z-50 rounded-md border p-2 md:hidden ${
           isDark
-            ? "border-neutral-800 bg-black text-neutral-100"
-            : "border-neutral-300 bg-white text-neutral-700"
+            ? "border-slate-700 bg-slate-900 text-slate-100"
+            : "border-slate-300 bg-slate-50 text-slate-700"
         }`}
         onClick={() => setOpen(!open)}
         aria-label="Abrir menu"
@@ -48,30 +48,30 @@ export default function Sidebar({
 
       {open && (
         <div
-          className={`fixed inset-0 md:hidden ${isDark ? "bg-black/40" : "bg-neutral-900/20"}`}
+          className={`fixed inset-0 md:hidden ${isDark ? "bg-slate-950/40" : "bg-slate-900/20"}`}
           onClick={() => setOpen(false)}
         />
       )}
 
       <aside
         className={`fixed z-40 flex h-full w-72 flex-col border-r transition-transform duration-300 md:static
-        ${isDark ? "border-neutral-900 bg-black" : "border-neutral-200 bg-white"}
+        ${isDark ? "border-slate-800 bg-slate-900" : "border-slate-200 bg-slate-50"}
         ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
       >
-        <div className={`border-b p-6 ${isDark ? "border-neutral-900" : "border-neutral-200"}`}>
-          <p className={`text-xs uppercase tracking-[0.24em] ${isDark ? "text-neutral-500" : "text-neutral-500"}`}>
+        <div className={`border-b p-6 ${isDark ? "border-slate-800" : "border-slate-200"}`}>
+          <p className={`text-xs uppercase tracking-[0.24em] ${isDark ? "text-blue-400" : "text-blue-600"}`}>
             Dashboard
           </p>
-          <h2 className={`mt-2 text-2xl font-bold tracking-tight ${isDark ? "text-white" : "text-black"}`}>
+          <h2 className={`mt-2 text-2xl font-bold tracking-tight ${isDark ? "text-slate-50" : "text-slate-900"}`}>
             ScreenTime BI
           </h2>
-          <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+          <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
             Inteligencia de uso digital no Brasil
           </p>
-          <button type="button" onClick={toggleTheme} className={`mt-4 inline-flex items-center gap-2 border px-3 py-2 text-xs font-semibold transition ${
+          <button type="button" onClick={toggleTheme} className={`mt-4 inline-flex items-center gap-2 rounded-md border px-3 py-2 text-xs font-semibold transition ${
               isDark
-                ? "border-neutral-800 text-neutral-200 hover:border-neutral-600"
-                : "border-neutral-300 text-neutral-700 hover:border-neutral-500"
+                ? "border-slate-700 text-slate-200 hover:border-slate-500"
+                : "border-slate-300 text-slate-700 hover:border-slate-400"
             }`}
           >
             {isDark ? <Sun size={14} /> : <Moon size={14} />}
@@ -88,15 +88,13 @@ export default function Sidebar({
                     if (onItemClick) onItemClick(id);
                     setOpen(false);
                   }}
-                  className={`flex w-full items-center gap-3 border px-4 py-3 text-left text-sm transition
+                  className={`flex w-full items-center gap-3 rounded-md border px-4 py-3 text-left text-sm transition
                     ${
                       activeItem === id
-                        ? isDark
-                          ? "border-white bg-white text-black"
-                          : "border-black bg-black text-white"
+                        ? "border-blue-500 bg-blue-500 text-white"
                         : isDark
-                          ? "border-transparent text-neutral-400 hover:border-neutral-800 hover:text-white"
-                          : "border-transparent text-neutral-600 hover:border-neutral-300 hover:text-black"
+                          ? "border-transparent text-slate-400 hover:border-slate-700 hover:text-slate-50"
+                          : "border-transparent text-slate-600 hover:border-slate-300 hover:text-slate-900"
                     }`}
                 >
                   {createElement(Icon, { size: 17 })}
@@ -109,28 +107,26 @@ export default function Sidebar({
 
         <div className="mt-auto p-4">
           <div
-            className={`border p-4 ${
-              isDark ? "border-neutral-900" : "border-neutral-200"
+            className={`rounded-lg border p-4 ${
+              isDark ? "border-slate-800" : "border-slate-200"
             }`}
           >
-            <p className={`text-sm font-semibold ${isDark ? "text-white" : "text-black"}`}>
+            <p className={`text-sm font-semibold ${isDark ? "text-slate-50" : "text-slate-900"}`}>
               Relatorio mensal
             </p>
-            <p className={`mt-1 text-xs ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+            <p className={`mt-1 text-xs ${isDark ? "text-slate-400" : "text-slate-600"}`}>
               Exporte uma versao em PDF com os principais indicadores.
             </p>
             <div className="mt-4 flex gap-2">
-              <button type="button" onClick={onExport} className={`inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold transition ${
-                  isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"
-                }`}
+              <button type="button" onClick={onExport} className="inline-flex items-center gap-2 rounded-md bg-blue-500 px-3 py-2 text-xs font-semibold text-white transition hover:bg-blue-600"
               >
                 <Download size={14} />
                 Exportar
               </button>
-              <button type="button" onClick={onHelp} className={`inline-flex items-center gap-2 border px-3 py-2 text-xs font-semibold transition ${
+              <button type="button" onClick={onHelp} className={`inline-flex items-center gap-2 rounded-md border px-3 py-2 text-xs font-semibold transition ${
                   isDark
-                    ? "border-neutral-800 text-neutral-200 hover:border-neutral-600"
-                    : "border-neutral-300 text-neutral-700 hover:border-neutral-500"
+                    ? "border-slate-700 text-slate-200 hover:border-slate-500"
+                    : "border-slate-300 text-slate-700 hover:border-slate-400"
                 }`}
               >
                 <CircleHelp size={14} />

@@ -13,22 +13,20 @@ export default function Hero() {
   const { isDark } = useTheme();
 
   const badgeClass = isDark
-    ? "border-neutral-800 text-neutral-400"
-    : "border-neutral-300 text-neutral-600";
-  const titleClass = isDark ? "text-white" : "text-black";
-  const textClass = isDark ? "text-neutral-400" : "text-neutral-600";
-  const primaryButtonClass = isDark
-    ? "bg-white text-black hover:bg-neutral-200"
-    : "bg-black text-white hover:bg-neutral-800";
+    ? "rounded-md border-slate-700 text-blue-400"
+    : "rounded-md border-slate-300 text-blue-600";
+  const titleClass = isDark ? "text-slate-50" : "text-slate-900";
+  const textClass = isDark ? "text-slate-400" : "text-slate-600";
+  const primaryButtonClass = "rounded-md bg-blue-500 text-white hover:bg-blue-600";
   const secondaryButtonClass = isDark
-    ? "border-neutral-700 text-neutral-100 hover:border-white"
-    : "border-neutral-300 text-neutral-800 hover:border-black";
-  const cardClass = isDark ? "border-neutral-800" : "border-neutral-200";
-  const highlightValueClass = isDark ? "text-white" : "text-black";
-  const highlightLabelClass = isDark ? "text-neutral-500" : "text-neutral-500";
+    ? "rounded-md border-slate-700 text-slate-100 hover:border-blue-400"
+    : "rounded-md border-slate-300 text-slate-800 hover:border-blue-500";
+  const cardClass = isDark ? "rounded-lg border-slate-800" : "rounded-lg border-slate-200";
+  const highlightValueClass = isDark ? "text-slate-50" : "text-slate-900";
+  const highlightLabelClass = isDark ? "text-slate-500" : "text-slate-500";
   const iconClass = isDark
-    ? "border-neutral-700 text-neutral-300"
-    : "border-neutral-300 text-neutral-700";
+    ? "rounded-md border-slate-700 text-blue-400"
+    : "rounded-md border-slate-300 text-blue-600";
 
   return (
     <section className="relative overflow-hidden pt-28 md:pt-36">

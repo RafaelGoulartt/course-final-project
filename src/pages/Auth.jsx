@@ -46,26 +46,24 @@ export default function Auth() {
   const isPasswordStrong = Object.values(passwordChecks).every(Boolean);
 
   const pageClass = isDark
-    ? "bg-black text-neutral-100"
-    : "bg-white text-black";
+    ? "bg-slate-900 text-slate-100"
+    : "bg-slate-50 text-slate-900";
 
   const cardClass = isDark
-    ? "border-neutral-800 bg-black"
-    : "border-neutral-200 bg-white";
+    ? "rounded-lg border-slate-800 bg-slate-900"
+    : "rounded-lg border-slate-200 bg-slate-50";
 
   const inputClass = useMemo(
     () =>
-      `w-full border px-4 py-3 text-sm outline-none transition focus:border-current ${
+      `w-full rounded-md border px-4 py-3 text-sm outline-none transition focus:border-blue-500 ${
         isDark
-          ? "border-neutral-700 bg-black text-neutral-100 placeholder:text-neutral-500"
-          : "border-neutral-300 bg-white text-black placeholder:text-neutral-500"
+          ? "border-slate-700 bg-slate-900 text-slate-100 placeholder:text-slate-500"
+          : "border-slate-300 bg-white text-slate-900 placeholder:text-slate-500"
       }`,
     [isDark],
   );
 
-  const sidePanelClass = isDark
-    ? "bg-white text-black"
-    : "bg-black text-white";
+  const sidePanelClass = "bg-blue-500 text-white";
 
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
@@ -118,22 +116,22 @@ export default function Auth() {
 
       {showSuccessModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-          <div className={`mx-4 w-full max-w-sm border p-8 text-center ${isDark ? "border-neutral-700 bg-black" : "border-neutral-200 bg-white"}`}>
+          <div className={`mx-4 w-full max-w-sm rounded-lg border p-8 text-center ${isDark ? "border-slate-700 bg-slate-900" : "border-slate-200 bg-white"}`}>
             <div className="mb-4 flex justify-center">
               <CheckCircle size={56} className="text-emerald-500" />
             </div>
             <h2 className="text-2xl font-bold">Conta criada!</h2>
-            <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+            <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
               Sua conta foi criada com sucesso. Você será redirecionado para o login em instantes.
             </p>
             <div className="mt-6 flex items-center justify-center gap-2">
               <span className="text-4xl font-bold">{countdown}</span>
-              <span className={`text-sm ${isDark ? "text-neutral-400" : "text-neutral-500"}`}>segundos</span>
+              <span className={`text-sm ${isDark ? "text-slate-400" : "text-slate-500"}`}>segundos</span>
             </div>
             <button
               type="button"
               onClick={() => { setShowSuccessModal(false); setMode("login"); }}
-              className={`mt-6 w-full px-5 py-3 font-semibold transition ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`}
+              className="mt-6 w-full rounded-md bg-blue-500 px-5 py-3 font-semibold text-white transition hover:bg-blue-600"
             >
               Ir para o login agora
             </button>
@@ -146,7 +144,7 @@ export default function Auth() {
             <Link
               to="/"
               className={`mb-6 inline-flex items-center gap-2 text-sm font-semibold ${
-                isDark ? "text-neutral-300 hover:text-white" : "text-neutral-600 hover:text-black"
+                isDark ? "text-slate-300 hover:text-blue-400" : "text-slate-600 hover:text-blue-600"
               }`}
             >
               <ArrowLeft size={16} />
@@ -162,7 +160,7 @@ export default function Auth() {
               >
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight">Entrar</h1>
-                  <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+                  <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Use seu email e senha para acessar.
                   </p>
                 </div>
@@ -173,7 +171,7 @@ export default function Auth() {
                   onChange={(event) => setLoginData((prev) => ({ ...prev, password: event.target.value }))}
                 />
 
-                <button type="submit" disabled={submitting} className={`w-full px-5 py-3 font-semibold transition disabled:opacity-60 ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`} >
+                <button type="submit" disabled={submitting} className="w-full rounded-md bg-blue-500 px-5 py-3 font-semibold text-white transition hover:bg-blue-600 disabled:opacity-60" >
                   {submitting ? "Entrando..." : "Fazer login"}
                 </button>
               </form>
@@ -181,7 +179,7 @@ export default function Auth() {
               <form onSubmit={handleRegisterSubmit} className={`absolute inset-0 space-y-5 transition-all duration-500 ${ isLogin ? "translate-x-10 opacity-0 pointer-events-none" : "translate-x-0 opacity-100"}`}>
                 <div>
                   <h1 className="text-3xl font-bold tracking-tight">Cadastrar</h1>
-                  <p className={`mt-2 text-sm ${isDark ? "text-neutral-400" : "text-neutral-600"}`}>
+                  <p className={`mt-2 text-sm ${isDark ? "text-slate-400" : "text-slate-600"}`}>
                     Crie sua conta para começar.
                   </p>
                 </div>
@@ -196,14 +194,14 @@ export default function Auth() {
                   <div className="relative">
                     <input type={showRegisterPassword ? "text" : "password"} name="password" placeholder="Crie uma senha" required className={`${inputClass} pr-12`} value={registerData.password} onChange={(event) => setRegisterData((prev) => ({ ...prev, password: event.target.value }))} />
 
-                    <button type="button" onClick={() => setShowRegisterPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 transition ${ isDark ? "text-neutral-300 hover:bg-neutral-900" : "text-neutral-600 hover:bg-neutral-100"}`}
+                    <button type="button" onClick={() => setShowRegisterPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 transition ${ isDark ? "text-slate-300 hover:bg-slate-800" : "text-slate-600 hover:bg-slate-100"}`}
                       aria-label={showRegisterPassword ? "Ocultar senha" : "Visualizar senha"}
                     >
                       {showRegisterPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
 
-                  <div className={`border p-3 text-xs ${isDark ? "border-neutral-700" : "border-neutral-300"}`}>
+                  <div className={`rounded-md border p-3 text-xs ${isDark ? "border-slate-700" : "border-slate-300"}`}>
                     <p className="mb-2 font-semibold">Senha deve conter:</p>
                     <ul className="space-y-1">
                       <li className={passwordChecks.minLength ? "text-emerald-500" : "text-rose-500"}>
@@ -231,12 +229,12 @@ export default function Auth() {
                       setRegisterData((prev) => ({ ...prev, confirmPassword: event.target.value }))
                     }
                   />
-                  <button type="button" onClick={() => setShowRegisterConfirmPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 transition ${ isDark ? "text-neutral-300 hover:bg-neutral-900" : "text-neutral-600 hover:bg-neutral-100" }`} aria-label={showRegisterConfirmPassword ? "Ocultar senha" : "Visualizar senha"}>
+                  <button type="button" onClick={() => setShowRegisterConfirmPassword((prev) => !prev)} className={`absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 transition ${ isDark ? "text-slate-300 hover:bg-slate-800" : "text-slate-600 hover:bg-slate-100" }`} aria-label={showRegisterConfirmPassword ? "Ocultar senha" : "Visualizar senha"}>
                     {showRegisterConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
 
-                <button type="submit" disabled={submitting || !isPasswordStrong} className={`w-full px-5 py-3 font-semibold transition disabled:opacity-60 ${isDark ? "bg-white text-black hover:bg-neutral-200" : "bg-black text-white hover:bg-neutral-800"}`}>
+                <button type="submit" disabled={submitting || !isPasswordStrong} className="w-full rounded-md bg-blue-500 px-5 py-3 font-semibold text-white transition hover:bg-blue-600 disabled:opacity-60">
                   {submitting ? "Cadastrando..." : "Criar conta"}
                 </button>
               </form>
@@ -269,7 +267,7 @@ export default function Auth() {
             <button
               type="button"
               onClick={() => setMode(isLogin ? "register" : "login")}
-              className={`mt-8 w-fit px-6 py-3 text-sm font-semibold transition ${isDark ? "bg-black text-white hover:bg-neutral-900" : "bg-white text-black hover:bg-neutral-200"}`}
+              className="mt-8 w-fit rounded-md bg-white px-6 py-3 text-sm font-semibold text-blue-600 transition hover:bg-slate-100"
             >
               {isLogin ? "Cadastrar" : "Fazer login"}
             </button>
