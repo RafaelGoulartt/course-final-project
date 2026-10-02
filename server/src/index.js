@@ -1,6 +1,8 @@
-import "dotenv/config";
+import dotenv from "dotenv";
 import app from "./app.js";
 import { getPool } from "./db.js";
+
+dotenv.config({ path: new URL("../../.env", import.meta.url) });
 
 const port = Number(process.env.PORT || 3001);
 

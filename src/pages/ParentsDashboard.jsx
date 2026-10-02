@@ -4,6 +4,7 @@ import {
   ArrowLeft,
   ChartColumnBig,
   KeyRound,
+  Bell,
   Copy,
   Check,
   HelpCircle,
@@ -12,6 +13,7 @@ import {
   BarChart2,
   RefreshCw,
   LogOut,
+  Send,
 } from "lucide-react";
 import { Chart } from "chart.js/auto";
 import { useTheme } from "../context/useTheme";
@@ -40,6 +42,14 @@ export default function ParentsDashboard() {
   const [message, setMessage] = useState("");
   const [copiedToken, setCopiedToken] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const [showNotificationModal, setShowNotificationModal] = useState(false);
+  const [notificationText, setNotificationText] = useState("");
+  const [notificationFeedback, setNotificationFeedback] = useState("");
+  const [sendingNotification, setSendingNotification] = useState(false);
+  const [registeredApps, setRegisteredApps] = useState([]);
+  const [blockDurations, setBlockDurations] = useState({});
+  const [blockingPackage, setBlockingPackage] = useState("");
+  const [blockFeedback, setBlockFeedback] = useState("");
 
   useEffect(() => {
     const currentUser = authService.getCurrentUser();
@@ -68,12 +78,19 @@ export default function ParentsDashboard() {
       setTempoPorApp(response?.tempoPorApp || []);
       setTempoPorDia(response?.tempoPorDia || []);
       setHasData(Boolean(response?.hasData));
+      const appsResponse = await dashboardService.carregarAppsRegistrados(
+        userId,
+        response?.token || "",
+        filhoId,
+      );
+      setRegisteredApps(appsResponse?.apps || []);
       if (!response?.hasData) setMessage("Nenhum dado disponível ainda.");
     } catch (error) {
       setMessage(error.message || "Erro ao carregar dashboard.");
       setHasData(false);
       setTempoPorApp([]);
       setTempoPorDia([]);
+      setRegisteredApps([]);
     } finally {
       setLoading(false);
     }
@@ -115,6 +132,42 @@ export default function ParentsDashboard() {
       setMessage(error.message || "Erro ao gerar código.");
     } finally {
       setGeneratingToken(false);
+    }
+  }
+
+  async function handleSendNotification(event) {
+    event.preventDefault();
+    if (!user?.id || !token || !notificationText.trim()) return;
+
+    setSendingNotification(true);
+    setNotificationFeedback("");
+    try {
+      const result = await dashboardService.enviarNotificacao(user.id, token, notificationText.trim());
+      setNotificationText("");
+      setNotificationFeedback(result?.pushEnviada
+        ? "Notificação push enviada ao celular."
+        : "Mensagem enfileirada; o app receberá quando estiver aberto e conectado.");
+    } catch (error) {
+      setNotificationFeedback(error.message || "Não foi possível enviar a notificação.");
+    } finally {
+      setSendingNotification(false);
+    }
+  }
+
+  async function handleBlockApp(app) {
+    if (!user?.id || !token || !app?.package_name) return;
+    const durationMinutes = Number(blockDurations[app.package_name] || 30);
+    setBlockingPackage(app.package_name);
+    setBlockFeedback("");
+    try {
+      await dashboardService.bloquearApp(user.id, token, app.package_name, durationMinutes);
+      const response = await dashboardService.carregarAppsRegistrados(user.id, token, filhoSelecionadoId || null);
+      setRegisteredApps(response?.apps || []);
+      setBlockFeedback(`${app.nome} bloqueado por ${durationMinutes} minutos.`);
+    } catch (error) {
+      setBlockFeedback(error.message || "Não foi possível bloquear o app.");
+    } finally {
+      setBlockingPackage("");
     }
   }
 
@@ -255,6 +308,52 @@ export default function ParentsDashboard() {
 
   return (
     <main className={`relative min-h-screen p-4 md:p-8 ${t.main}`}>
+      {showNotificationModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+          <form onSubmit={handleSendNotification} className={`w-full max-w-lg border p-6 ${t.modalBg}`}>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h2 className="text-xl font-bold">Enviar notificação</h2>
+                <p className={`mt-2 text-sm ${t.textSoft}`}>
+                  A mensagem será enviada ao app associado ao código de conexão.
+                </p>
+              </div>
+              <button type="button" onClick={() => setShowNotificationModal(false)} className={`p-2 ${t.btnGhost}`} aria-label="Fechar">
+                <X size={18} />
+              </button>
+            </div>
+            <textarea
+              autoFocus
+              rows={5}
+              maxLength={500}
+              value={notificationText}
+              onChange={(event) => setNotificationText(event.target.value)}
+              placeholder="Escreva a mensagem para o app..."
+              className={`mt-5 w-full resize-y border px-3 py-3 text-sm outline-none focus:border-blue-500 ${t.input}`}
+            />
+            <div className={`mt-1 text-right text-xs ${t.textMuted}`}>{notificationText.length}/500</div>
+            {notificationFeedback && (
+              <p role="status" className={`mt-3 text-sm ${notificationFeedback.startsWith("Notificação enviada") ? "text-emerald-500" : "text-rose-500"}`}>
+                {notificationFeedback}
+              </p>
+            )}
+            <div className="mt-5 flex justify-end gap-2">
+              <button type="button" onClick={() => setShowNotificationModal(false)} className={`border px-4 py-2 text-sm font-semibold ${t.btnGhost}`}>
+                Fechar
+              </button>
+              <button
+                type="submit"
+                disabled={!notificationText.trim() || sendingNotification}
+                className={`inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold disabled:opacity-50 ${t.btnPrimary}`}
+              >
+                <Send size={15} />
+                {sendingNotification ? "Enviando..." : "Enviar"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
       {showInstructions && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
           <div className={`w-full max-w-lg border p-8 ${t.modalBg}`}>
@@ -368,6 +467,86 @@ export default function ParentsDashboard() {
               {copiedToken ? "Copiado!" : "Copiar"}
             </button>
           </div>
+        </section>
+
+        <section className={`mt-4 border p-5 ${t.panel}`}>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h2 className="font-bold">Apps registrados</h2>
+              <p className={`mt-1 text-sm ${t.textMuted}`}>
+                Bloqueie temporariamente um app no dispositivo sincronizado.
+              </p>
+              <p className={`mt-1 text-xs ${t.textMuted}`}>
+                O celular precisa estar conectado e com o serviço "Bloqueio temporário de apps" habilitado em Acessibilidade.
+              </p>
+            </div>
+            <span className={`text-xs ${t.textMuted}`}>{registeredApps.length} apps</span>
+          </div>
+          {registeredApps.length ? (
+            <ul className="mt-4 divide-y divide-slate-800">
+              {registeredApps.map((app) => {
+                const activeBlock = app.bloqueado_ate && new Date(app.bloqueado_ate) > new Date();
+                return (
+                  <li key={app.package_name} className="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold">{app.nome}</p>
+                      <p className={`truncate font-mono text-xs ${t.textMuted}`}>{app.package_name}</p>
+                      {activeBlock && (
+                        <p className="mt-1 text-xs text-rose-400">
+                          Bloqueado até {new Date(app.bloqueado_ate).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <select
+                        aria-label={`Duração do bloqueio para ${app.nome}`}
+                        value={blockDurations[app.package_name] || 30}
+                        onChange={(event) => setBlockDurations((current) => ({ ...current, [app.package_name]: Number(event.target.value) }))}
+                        disabled={!token || blockingPackage === app.package_name}
+                        className={`border px-2 py-2 text-sm ${t.input}`}
+                      >
+                        {[15, 30, 60, 120, 240].map((minutes) => (
+                          <option key={minutes} value={minutes}>{minutes < 60 ? `${minutes} min` : `${minutes / 60} h`}</option>
+                        ))}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={() => handleBlockApp(app)}
+                        disabled={!token || blockingPackage === app.package_name}
+                        className={`px-3 py-2 text-sm font-semibold disabled:opacity-50 ${t.btnPrimary}`}
+                      >
+                        {blockingPackage === app.package_name ? "Aplicando..." : activeBlock ? "Estender" : "Bloquear"}
+                      </button>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className={`mt-4 border-t pt-4 text-sm ${t.textMuted}`}>
+              Ainda não há apps sincronizados para este perfil.
+            </p>
+          )}
+          {blockFeedback && <p role="status" className="mt-3 text-sm text-blue-400">{blockFeedback}</p>}
+        </section>
+
+        <section className={`mt-4 flex flex-col gap-4 border p-5 sm:flex-row sm:items-center sm:justify-between ${t.panel}`}>
+          <div className="flex items-start gap-3">
+            <Bell size={19} className="mt-0.5 shrink-0 text-blue-500" />
+            <div>
+              <p className="font-bold">Enviar notificação</p>
+              <p className={`mt-1 text-sm ${t.textMuted}`}>Envie uma mensagem para o app vinculado ao código atual.</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => { setNotificationFeedback(""); setShowNotificationModal(true); }}
+            disabled={!token}
+            className={`inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${t.btnPrimary}`}
+          >
+            <Send size={15} />
+            Escrever mensagem
+          </button>
         </section>
 
         <section className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">

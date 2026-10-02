@@ -1,4 +1,7 @@
+import dotenv from "dotenv";
 import { Pool } from "pg";
+
+dotenv.config({ path: new URL("../../.env", import.meta.url) });
 
 const baseConfig = process.env.DATABASE_URL
   ? { connectionString: process.env.DATABASE_URL }
@@ -9,6 +12,10 @@ const baseConfig = process.env.DATABASE_URL
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
     };
+
+if (baseConfig.connectionString?.includes('[YOUR-PASSWORD]')) {
+  throw new Error('DATABASE_URL ainda usa [YOUR-PASSWORD]. Substitua pelo password real do Supabase Pooler.');
+}
 
 const pool = new Pool({
   ...baseConfig,
