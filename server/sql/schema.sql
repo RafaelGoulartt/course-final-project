@@ -46,3 +46,26 @@ CREATE TABLE IF NOT EXISTS tempo_uso (
   data_uso       DATE NOT NULL,
   UNIQUE(filho_id, app_id, data_uso)
 );
+
+-- Mensagens que os pais enviam para o celular do filho
+CREATE TABLE IF NOT EXISTS mensagens (
+  id         SERIAL PRIMARY KEY,
+  filho_id   INTEGER NOT NULL REFERENCES filhos(id) ON DELETE CASCADE,
+  texto      VARCHAR(500) NOT NULL,
+  criada_em  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  lida_em    TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_mensagens_filho ON mensagens (filho_id, criada_em DESC);
+
+-- Apps suspensos pelos pais. fim NULL = suspenso ate liberar manualmente.
+CREATE TABLE IF NOT EXISTS suspensoes (
+  id           SERIAL PRIMARY KEY,
+  filho_id     INTEGER NOT NULL REFERENCES filhos(id) ON DELETE CASCADE,
+  app_id       INTEGER NOT NULL REFERENCES apps(id) ON DELETE CASCADE,
+  criada_em    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  fim          TIMESTAMPTZ,
+  liberada_em  TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_suspensoes_filho ON suspensoes (filho_id);
